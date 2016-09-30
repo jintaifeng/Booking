@@ -1,0 +1,690 @@
+@font-face {
+	font-family:'NanumBarunGothic';
+	font-style: normal;
+	font-weight: normal;
+	src:	url('font/NanumBarunGothic.eot');
+	src:	local('※'), 
+			url('font/NanumBarunGothic.eot?#iefix') format('embedded-opentype'), 
+			url('font/NanumBarunGothic.woff') format('woff');
+}
+
+body {font-size: 12px; font-family:'Dotum','돋움',Helvetica,AppleSDGothicNeo,sans-serif; background:#f5f5f5;}
+.container {width:1200px; margin-right: auto; margin-left: auto; padding-left: 0px; padding-right: 0px;}
+@media (max-width:1199px) {.container {width:100%;}}
+
+ul, ol, dl {margin-top: 0; margin-bottom: 9px; padding-left: 0px;}
+li {list-style: none;}
+label {vertical-align: middle;}
+hr {margin-top: 30px; margin-bottom: 30px;}
+h1, .h1, h2, .h2, h3, .h3 {margin-top: 0px; margin-bottom: 0px;}
+h4, .h4, h5, .h5, h6, .h6 {margin-top: 0px; margin-bottom: 0px;}
+.visible-xs, .visible-sm, .visible-md, .visible-lg {display: none !important;}
+.comment {vertical-align: middle; color:#ff0000;}
+.clearfix {margin:10px 0;}
+.tooltip-inner {max-width: 500px; text-align:left;} /* 디폴트는 200px center*/
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* 그리드 여백 관련 */
+.col-xs-12, .col-xs-6 {padding-left:0px; padding-right:0px;}
+.col-xs-6:first-child {padding-right:5px;}
+.col-xs-6:last-child {padding-left:5px;}
+.col-lg-2 {padding-right:5px; padding-left:5px;}
+.col-lg-2:last-child {padding-right:0px;}
+@media (max-width: 769px) {
+	.col-xs-6 {}
+	.col-lg-2:nth-child(2n-1) {padding-left:0px;}
+	.col-lg-2:nth-child(2n) {padding-right:0px;}
+}
+
+/*div[class*="col-"] {padding:0px; margin:10px 0px;}*/
+/*div[class*="col-"] {padding-left:5px; padding-right:5px;}*/
+/*.col-xs-12 {padding-left:0px !important; padding-right:0px !important;}*/
+/*
+div[class*="col-"]:nth-child(2n-1) {padding-right:5px !important; padding-left:0px !important;}	//홀수번째
+div[class*="col-"]:nth-child(2n) {padding-left:0px !important; padding-right:5px !important;}		//짝수번째
+div[class*="col-"]:last-child {padding-right:0px !important;}		//마지막
+*/
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Text-Align */
+.text-left {text-align: left !important;}
+.text-center {text-align: center !important;}
+.text-right {text-align: right !important;}
+.text-justify {text-align: justify !important;}						/* 글자 양쪽정렬 */
+.text-vtop {vertical-align: top !important;}
+.text-vmid {vertical-align: middle !important;}
+.text-vbot {vertical-align: baseline !important;}
+.text-bold {font-weight: bold !important;}							/* 글자 두껍게 */
+.text-none {font-weight: normal !important;}						/* 글자 두께 원래대로 */
+.ws-nowrap {white-space: nowrap !important;}						/* 글자 줄바꿈 불가 */
+.ws-normal {white-space: normal !important; word-break:break-all;}	/* 글자 줄바꿈 허용 */
+
+.font-11 {font-size: 11px; line-height: 1.2;}
+.font-10 {font-size: 10px; line-height: 1.1;}
+
+.padding-0 {padding:0px !important;}
+.padding-1 {padding:1px !important;}
+.padding-3 {padding:3px !important;}
+.padding-5 {padding:5px !important;}
+.mg-bt-10 {margin-bottom: 10px;}
+
+/* Color-Preset */
+.color-primary {color:#337ab7 !important;}
+.color-info {color:#5bc0de !important;}
+.color-success {color:#5cb85c !important;}
+.color-warning {color:#f0ad4e !important;}
+.color-danger {color:#d9534f !important;}
+
+.color-lightBlue {color:#3c8dbc !important;}
+.color-red {color:#ff0000 !important;}
+.color-green {color:#00a65a !important;}
+.color-aqua {color:#00c0ef !important;}
+.color-yellow {color:#ffff66 !important;}
+.color-blue {color:#0073b7 !important;}
+.color-navy {color:#001F3F !important;}
+.color-teal {color:#39CCCC !important;}
+.color-olive {color:#3D9970 !important;}
+.color-lime {color:#01FF70 !important;}
+.color-orange {color:#FF851B !important;}
+.color-fuchsia {color:#F012BE !important;}
+.color-purple {color:#8E24AA !important;}
+.color-maroon {color:#D81B60 !important;}
+.color-black {color:#222222 !important;}
+.color-gray {color:#d2d6de !important;}
+.color-white {color:#ffffff !important;}
+
+.bg-primary {background-color:#337ab7 !important;}
+.bg-info {background-color:#5bc0de !important;}
+.bg-success {background-color:#5cb85c !important;}
+.bg-warning {background-color:#f0ad4e !important;}
+.bg-danger {background-color:#d9534f !important;}
+
+.bg-lightBlue {background-color:#3c8dbc !important;}
+.bg-red {background-color:#ff0000 !important;}
+.bg-green {background-color:#00a65a !important;}
+.bg-aqua {background-color:#00c0ef !important;}
+.bg-yellow {background-color:#ffff66 !important;}
+.bg-blue {background-color:#0073b7 !important;}
+.bg-navy {background-color:#001F3F !important;}
+.bg-teal {background-color:#39CCCC !important;}
+.bg-olive {background-color:#3D9970 !important;}
+.bg-lime {background-color:#01FF70 !important;}
+.bg-orange {background-color:#FF851B !important;}
+.bg-fuchsia {background-color:#F012BE !important;}
+.bg-purple {background-color:#8E24AA !important;}
+.bg-maroon {background-color:#D81B60 !important;}
+.bg-black {background-color:#222222 !important;}
+.bg-gray {background-color:#d2d6de !important;}
+.bg-yellow-green {background-color:#66ff99 !important;}
+.bg-ivory {background-color:#ffffcc !important;}
+.bg-gray-0 {background-color:#ebebeb !important;}
+.bg-gray-1 {background-color:#f6f6f6 !important;}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Navbar */
+.navbar {/*background-color:#4a8ada; border-bottom:1px solid #d2d2d2;*/}
+.navbar .container {background-color:#00A65A; /*border-bottom:1px solid #d2d2d2;*/}
+.navbar .navbar-brand {height:54px; padding:15px; color:#fff; font-size:18px; line-height:28px; font-weight: bold;}
+
+.navbar .nav {padding: 6px; color:#fff;}
+.navbar .nav a {padding: 10px; color:#fff;}
+.navbar .nav a:hover, .navbar .nav a:active, .navbar .nav a:focus {background:rgba(0,0,0,0.1);}
+
+.navbar-toggle {margin: 10px 15px 10px 10px; border:1px solid #fff;}
+.navbar-toggle:hover, .navbar-toggle:active, .navbar-toggle:focus {background:rgba(0,0,0,0.1);}
+.navbar-toggle .icon-bar {background:#fff;}
+
+.navbar .nav .hide-menu {display:none !important;}
+
+@media (max-width:767px) {
+	.navbar .nav .hide-menu {display:block !important;}
+}
+
+@media (min-width: 768px) {
+	.navbar-nav{float: right;}
+	.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {margin-left: 0px;}
+}
+
+@media (max-width: 1099px) {
+	.container {width: 100%;}
+}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Login Form */
+.login-con {position:relative; width:100%; padding:20px; border:1px solid #d2d2d2; /*margin-top:50px;*/ display:table;}
+.login-btn {display:table-row;}
+.login-btn .col-xs-4 {padding-left:0px; padding-right:0px; text-align:center; /*border:1px solid #5e345e;*/}
+.login-btn .col-xs-4 a {display:block; color:#fff; padding:6px; text-decoration:none; background:#337ab7; font-size:11px;}
+
+.login-btn .col-xs-4:nth-child(1) a {border-top-left-radius:4px; border-bottom-left-radius:4px;}
+.login-btn .col-xs-4:nth-child(2) a {border-right:1px solid #f1f1f1;border-left:1px solid #f1f1f1;}
+.login-btn .col-xs-4:nth-child(3) a {border-top-right-radius:4px; border-bottom-right-radius:4px;}
+
+.login-btn .col-xs-4 a:hover {background:#286090;}
+.login-btn .col-xs-4 a:last-child {letter-spacing:-1px;}
+
+.login-con .clearfix-last {margin: 5px 0;}
+
+.login-wrap {margin-top:50px !important; margin-bottom:50px !important;}
+
+@media (max-width: 750px) {
+	.login-wrap {margin-top:15px !important; margin-bottom:15px !important;}
+}
+
+@media (max-width: 400px) {
+	.login-con {margin-top:10px;}
+}
+
+.login-info { margin:8px;}
+.login-info span.hide-nav {padding:3px !important; display:inline-block !important;}
+
+@media (max-width: 860px) {
+	.login-info span.hide-nav {display:none !important;}
+}
+
+.login-info a {margin-left:1px; margin-bottom:5px; padding:2px 10px !important; border:1px solid #f1f1f1;}
+.login-info a {display:inline-block !important;}
+
+@media (max-width:767px) {
+	.login-info { text-align:center;}
+}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Member Registration(회원가입) */
+.reg-wrap .col-sm-6 {padding:10px 20px 0px 0px !important;}
+.reg-wrap .col-sm-6:nth-of-type(2) {padding-right:0px !important;}
+.reg-wrap .clause {width:100%; height:150px; padding:10px; overflow:hidden; overflow-y:scroll; border:1px solid #d2d2d2;}
+.reg-wrap .chk-box {text-align:right; padding:5px 0px;}
+
+.reg-wrap .table > tbody > tr > th {min-width:105px;}
+.reg-wrap .table > tbody > tr > th, .reg-wrap .table > tbody > tr > td {text-align:left;}
+
+@media (min-width: 767px) and (max-width: 1000px) {
+	.reg-wrap.content {width:100%;}
+}
+
+@media (max-width: 767px) {
+	.reg-wrap.content {width:100%;}
+	.reg-wrap .col-sm-6 {padding:0px !important;}
+}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Sidebar */
+.sidebar {position:relative; width:111px; float:left; top:55px; z-index:1;}
+.sidebar ul {position:relative;}
+.sidebar ul li {border-bottom:1px solid #d2d2d2;}
+.sidebar ul li a {font-size:13px; line-height:14px; color:#080a30; text-decoration:none; padding:10px; margin-left:1px; display:block;}
+.sidebar ul li a.active, .sidebar ul li a.active:hover {background:#029cca; color:#fff;}
+.sidebar ul li a:hover {background:#f1f1f1;}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Content */
+.content-wrap {position:relative; height:auto; border-left:1px solid #d2d2d2; border-right:1px solid #d2d2d2; padding-top:55px; padding-left:110px; background:#fff;}
+.content {position:relative; border-left:1px solid #d2d2d2; padding:15px;}
+
+@media (max-width: 767px) {
+	.content-wrap {padding-left:0; border:0px;}
+	.sidebar {display:none;}
+}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Menu Title */
+.menu-title {text-align:center; font-weight:bold; margin-bottom:5px;}
+.menu-title li{padding:4px; border: 1px solid #d2d2d2;}
+.menu-title-help {text-align:left; padding:1px 4px; font-size:11px; line-height:13px;}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* 기본 테이블 설정 */
+.table-responsive {overflow-x: auto; min-height: 0.01%; margin-bottom: 3px;}
+
+@media (max-width: 767px) {
+	.col-xs-12 {margin-bottom: 10px;}
+	.table-responsive {
+		width: 100%; overflow-y: hidden; border: 1px solid #6c6c71; border-top:0px; 
+		-ms-overflow-style: -ms-autohiding-scrollbar;
+	}
+}
+
+.table {width: 100%; max-width: 100%; margin-bottom: 0px; background-color: transparent; border-collapse: collapse; border-spacing: 0;}
+
+.table > thead > tr > th, 
+.table > thead > tr > td {border-bottom-width: 0px;}
+
+.table > thead > tr:nth-child(2) > th {background-color:#f6f6f6;}
+
+.table > thead > tr > th, 
+.table > tbody > tr > th,
+.table > tfoot > tr > th {padding:1px 3px; background-color: #ebebeb;}
+ 
+.table > tbody > tr > td {padding:1px; line-height: 1.2;} /* 테이블 td 여백 때문에 우선 추가함. 상황보고 뺄 수도 있음 */
+
+/*.table > tfoot > tr > td {line-height: 1;}*/
+
+.table > thead > tr > th, 
+.table > tbody > tr > th, 
+.table > tfoot > tr > th, 
+.table > thead > tr > td,
+.table > tbody > tr > td, 
+.table > tfoot > tr > td {text-align: center; vertical-align: middle; white-space: nowrap; line-height: 1; height: 21px;}
+
+/*
+@media (max-width: 767px) {
+	.table-responsive > .table-bordered > tbody > tr:last-child > td {border-bottom: 1px solid #6c6c71;}	
+}
+*/
+
+.table > thead > tr > th > a, 
+.table > thead > tr > td > a, 
+.table > tbody > tr > th > a, 
+.table > tbody > tr > td > a, 
+.table > tfoot > tr > th > a, 
+.table > tfoot > tr > td > a {/* text-decoration:none; */}
+
+.table > caption+ thead > tr:first-child > th, 
+.table > colgroup+ thead > tr:first-child > th, 
+.table > thead:first-child > tr:first-child > th, 
+.table > caption+ thead > tr:first-child > td, 
+.table > colgroup+ thead > tr:first-child > td, 
+.table > thead:first-child > tr:first-child > td {border-top: 1px solid #6c6c71;}
+
+.table-in-2, .table-in-3, .table-none {width:100%;}
+.table-in-2 th {padding:1px 3px 1px 3px; text-align:center; border:1px solid #8d8d96 !important; background-color:#f6f6f6;}
+.table-in-2 td {padding:1px 3px 1px 3px; text-align:center; border:1px solid #8d8d96 !important;}
+.table-in-3 th {padding:1px 3px 1px 3px; text-align:center; border:1px solid #d2d2d2 !important; background-color:#f6f6f6;}
+.table-in-3 td {padding:1px 3px 1px 3px; text-align:center; border:1px solid #d2d2d2 !important;}
+.table-in-2 th, .table-in-2 td, .table-in-3 td, .table-in-3 td {line-height: 1; height: 20px;}
+.table-none th, .table-none td { padding:3px 3px 0px 3px; text-align:center; border:0px !important; background: none;}
+.last-th {border-right:1px solid #3a3a3e !important;}
+
+/*
+	테이블에 테그에 클래스 추가 시 테두리 색상이 변경됩니다.
+	ex) <table class="table ........  table-border-info"> 이와 같은 형태로 사용하세요.
+*/
+.table-border-primary thead tr th, .table-border-primary thead tr td,
+.table-border-primary tbody tr th, .table-border-primary tbody tr td,
+.table-border-primary tfoot tr th, .table-border-primary tfoot tr td {border:1px solid #337ab7 !important;}
+
+.table-border-info thead tr th, .table-border-info thead tr td,
+.table-border-info tbody tr th, .table-border-info tbody tr td,
+.table-border-info tfoot tr th, .table-border-info tfoot tr td {border:1px solid #5bc0de !important;}
+
+.table-border-success thead tr th, .table-border-success thead tr td,
+.table-border-success tbody tr th, .table-border-success tbody tr td,
+.table-border-success tfoot tr th, .table-border-success tfoot tr td {border:1px solid #5cb85c !important;}
+
+.table-border-warning thead tr th, .table-border-warning thead tr td,
+.table-border-warning tbody tr th, .table-border-warning tbody tr td,
+.table-border-warning tfoot tr th, .table-border-warning tfoot tr td {border:1px solid #f0ad4e !important;}
+
+.table-border-danger thead tr th, .table-border-danger thead tr td,
+.table-border-danger tbody tr th, .table-border-danger tbody tr td,
+.table-border-danger tfoot tr th, .table-border-danger tfoot tr td {border:1px solid #d9534f !important;}
+
+.table-border-lightBlue thead tr th, .table-border-lightBlue thead tr td,
+.table-border-lightBlue tbody tr th, .table-border-lightBlue tbody tr td,
+.table-border-lightBlue tfoot tr th, .table-border-lightBlue tfoot tr td {border:1px solid #3c8dbc !important;}
+
+.table-border-red thead tr th, .table-border-red thead tr td,
+.table-border-red tbody tr th, .table-border-red tbody tr td,
+.table-border-red tfoot tr th, .table-border-red tfoot tr td {border:1px solid #ff0000 !important;}
+
+.table-border-green thead tr th, .table-border-green thead tr td,
+.table-border-green tbody tr th, .table-border-green tbody tr td,
+.table-border-green tfoot tr th, .table-border-green tfoot tr td {border:1px solid #00a65a !important;}
+
+.table-border-aqua thead tr th, .table-border-aqua thead tr td,
+.table-border-aqua tbody tr th, .table-border-aqua tbody tr td,
+.table-border-aqua tfoot tr th, .table-border-aqua tfoot tr td {border:1px solid #00c0ef !important;}
+
+.table-border-blue thead tr th, .table-border-blue thead tr td,
+.table-border-blue tbody tr th, .table-border-blue tbody tr td,
+.table-border-blue tfoot tr th, .table-border-blue tfoot tr td {border:1px solid #0073b7 !important;}
+
+.table-border-navy thead tr th, .table-border-navy thead tr td,
+.table-border-navy tbody tr th, .table-border-navy tbody tr td,
+.table-border-navy tfoot tr th, .table-border-navy tfoot tr td {border:1px solid #001F3F !important;}
+
+.table-border-teal thead tr th, .table-border-teal thead tr td,
+.table-border-teal tbody tr th, .table-border-teal tbody tr td,
+.table-border-teal tfoot tr th, .table-border-teal tfoot tr td {border:1px solid #39CCCC !important;}
+
+.table-border-olive thead tr th, .table-border-olive thead tr td,
+.table-border-olive tbody tr th, .table-border-olive tbody tr td,
+.table-border-olive tfoot tr th, .table-border-olive tfoot tr td {border:1px solid #3D9970 !important;}
+
+.table-border-lime thead tr th, .table-border-lime thead tr td,
+.table-border-lime tbody tr th, .table-border-lime tbody tr td,
+.table-border-lime tfoot tr th, .table-border-lime tfoot tr td {border:1px solid #01FF70 !important;}
+
+.table-border-orange thead tr th, .table-border-orange thead tr td,
+.table-border-orange tbody tr th, .table-border-orange tbody tr td,
+.table-border-orange tfoot tr th, .table-border-orange tfoot tr td {border:1px solid #FF851B !important;}
+
+.table-border-fuchsia thead tr th, .table-border-fuchsia thead tr td,
+.table-border-fuchsia tbody tr th, .table-border-fuchsia tbody tr td,
+.table-border-fuchsia tfoot tr th, .table-border-fuchsia tfoot tr td {border:1px solid #F012BE !important;}
+
+.table-border-purple thead tr th, .table-border-purple thead tr td,
+.table-border-purple tbody tr th, .table-border-purple tbody tr td,
+.table-border-purple tfoot tr th, .table-border-purple tfoot tr td {border:1px solid #8E24AA !important;}
+
+.table-border-maroon thead tr th, .table-border-maroon thead tr td,
+.table-border-maroon tbody tr th, .table-border-maroon tbody tr td,
+.table-border-maroon tfoot tr th, .table-border-maroon tfoot tr td {border:1px solid #D81B60 !important;}
+
+.table-border-gray thead tr th, .table-border-gray thead tr td,
+.table-border-gray tbody tr th, .table-border-gray tbody tr td,
+.table-border-gray tfoot tr th, .table-border-gray tfoot tr td {border:1px solid #d2d6de !important;}
+
+.table-border-gray-1 thead tr th, .table-border-gray-1 thead tr td,
+.table-border-gray-1 tbody tr th, .table-border-gray-1 tbody tr td,
+.table-border-gray-1 tfoot tr th, .table-border-gray-1 tfoot tr td {border:1px solid #f1f1f1 !important;}
+
+.table-border-black thead tr th, .table-border-black thead tr td,
+.table-border-black tbody tr th, .table-border-black tbody tr td,
+.table-border-black tfoot tr th, .table-border-black tfoot tr td {border:1px solid #222222 !important;}
+
+.table-justified {width:100%;}
+.table-justified tr th, .table-justified tr td { white-space:nowrap;}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* 메인페이지 게시판 탭 관련 */
+.nav-tabs {border:0px;}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+	font-weight:bold; color:#31708f; background:#d9edf7; border:1px solid #6C6C71; border-bottom-color:transparent; cursor:default;
+	border-bottom-color: #6C6C71;
+}
+.nav-tabs>li>a {background:#f5f5f5; color:#666; border-bottom-color: #6C6C71; padding:8px 10px;}
+.nav-tabs>li>a:hover {border-bottom-color: #6C6C71;}
+
+.my_board_tab span {cursor:pointer; cursor:hand;}
+
+.board-preview {table-layout:fixed;}
+.board-preview > tbody > tr > td {padding:5px 10px; line-height:20px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:920px;}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* 기본 폼요소 설정 */
+.panel-body {padding: 0px 5px 0px 5px; position:relative; display:inline-block; width:100%;}
+.form-group {text-align:center; margin-bottom:0px; /*overflow-x: auto; white-space: nowrap;*/}
+.form-group input, .form-group select, .form-group button {margin-bottom:5px;}
+.form-group img {margin-bottom: 5px;}
+
+.panel-body .form-group .col-sm-6 {margin-bottom:0px;}
+.panel-body .form-group .col-sm-6:first-child {text-align:right; padding-right:2px;}
+.panel-body .form-group .col-sm-6:last-child {text-align:left; padding-left:2px;}
+
+@media (max-width: 767px) {
+	/*.panel-body .form-group .col-sm-6 {text-align:center; padding:0;}*/
+	.panel-body .form-group .col-xs-12:first-child,
+	.panel-body .form-group .col-xs-12:last-child {text-align:center; padding:0;}
+
+}
+
+
+.list-info {text-align:center; margin-bottom:5px;}
+
+.form-control {
+	display: inline-block; width: 90px; height: 22px; padding: 0px; /*padding-top:1px \0/IE9;*/ margin: 0px 1px 0px 0px;
+	font-size: 12px; line-height: 1.4; color: #131212; vertical-align: middle; border: 1px solid #afa8a8; border-radius: 3px;
+	-webkit-box-shadow: none; box-shadow: none; -webkit-transition: none; -o-transition: none; transition: none;
+}
+
+.form-control:focus {border-color: #06c70f; outline: 0; -webkit-box-shadow: none; box-shadow: none;}
+
+.form-hidden {width: auto; text-align: center; border: 0px; background-color: #fff !important;}
+
+#print {display: inline-block;}
+
+input[type="text"], input[type="search"] {padding:0px 3px 0px 3px;}
+input[type="password"] {}
+input[type="checkbox"] {}
+input[type="file"] {width:90% !important; border-radius: 3px; border:1px solid #afa8a8; display:inline-block;}
+input[type="file"]:focus {border-color: #06c70f; box-shadow: none;}
+input[type="radio"], input[type="checkbox"] {vertical-align:-2px;}
+textarea {
+	width: 100%; height: auto; overflow-y:auto;
+	border: 1px solid #afa8a8; border-radius: 3px;
+	-webkit-box-shadow: none; box-shadow: none; -webkit-transition: none; -o-transition: none; transition: none;
+}
+
+.btn {color: #fff;}
+.btn:hover, .btn:focus, .btn.focus {color: #fff; text-decoration: none;}
+.btn-xs, .btn-group-xs > .btn {padding: 1px 5px; font-size: 12px; line-height: 1.5; border-radius: 3px; color: #fff;}
+
+.fa-custom {font-family: 'NanumGothic', '돋움', sans-serif !important; font-weight: bold !important;}
+.fa-custom, .fa-custom-2 {font-size: 11.5px !important;}
+.astrick {font-size: 18px !important; vertical-align: middle; color: #ff0000; margin-top:-2px !important; }
+.btn-group-inline {margin:10px;}
+.chk_label {font-weight: normal; margin-top: 1px;}
+
+.model-search-btn {font-size: 14px !important; color:#337ab7; vertical-align: middle; margin-left: -3px; cursor:pointer; cursor:hand;}
+.model-search-btn:hover {color:#013c79;}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Image Resize */
+.model-img {padding: 1px !important;}
+.model-img div {text-align: center; margin: 0 auto; display: table; background-color: #fff; border: 1px solid #ccc;}
+.model-img div a {vertical-align: middle; display: table-cell;}
+.model-img div a img {margin: 0px; clear:both; cursor: pointer; cursor: hand; background-color: #fff; border:0px; /*border: 1px solid #5b5b62;*/}
+.model-img div p {margin: 3px 0px 0px 0px;}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* 김희연 작성 // 이미지 풍선 도움말 소스: http://javaking75.blog.me/220254435144 common_jquery.js 의 only_img_tooltip 참조 */
+#image_tooltip {
+	position: absolute; text-align:center; padding: 1px; color: #fff; background: #fff; overflow:hidden; z-index: 99999; display: none; 
+	border:1px solid #ccc; border-radius: 1px; -webkit-border-radius: 1px; -moz-border-radius: 1px;
+}	/* 재고관리 툴팁 이미지 */
+#image_tooltip img {position:relative;}
+#virtual_img {position:absolute; display:none;}	/* 카다로그 이미지 수정 시 가상 이미지 */
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Datepicker */
+.ui-widget select {font-family: Dotum, '돋움', Helvetica, AppleSDGothicNeo, sans-serif; font-weight: normal; color: #000;}
+.only_date {width:80px !important; text-align: center; padding-top:1px;}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Hidden Class - 숨기고 싶은 부분 class에 추가 */
+.hide-class {display: none !important;}
+@media (max-width: 767px) {.hide-btn {display: none !important;}}	/* 일정한 구간을 기준으로 숨기고 싶은 요소에 class를 추가한다. */
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Button 또는 Link에 마우스 오버 시 손가락 표시 */
+.box-tools i, .fa-check, .add_autho_menu_name, .add_autho_menu_type, .only_tooltip, .only_popover {cursor:pointer; cursor:hand;}
+span.only_tooltip:hover, span.only_popover:hover {text-decoration:underline;}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* popover 관련 */
+.popover {padding:1px; max-width: 600px; min-width:200px;}
+.popover-title, .modal-header {font-size:12px; font-weight:bold; color:#fff; line-height:16px; vertical-align:middle; background-color:#337AB7;}
+.popover-title .p-title {margin-right:10px;}
+
+.close {position:absolute; font-weight:normal; font-size:16px; font-weight:normal; right:10px; color:#fff; opacity: .8;}
+.close:hover, .close:focus {color:#fff; opacity: .5;}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* ime-mode 한글로시작 */
+.ime-kor{
+	-webkit-ime-mode:active;	/*크롬,사파리*/
+	-moz-ime-mode:active;		/*파이어폭스*/
+	-ms-ime-mode:active;		/*MS*/
+	-o-ime-mode:active;			/*오페라*/
+	ime-mode:active;			/*기타*/  
+}
+/* ime-mode 영문으로시작 */
+.ime-eng{
+	-webkit-ime-mode:inactive; 
+	-moz-ime-mode:inactive; 
+	-ms-ime-mode:inactive; 
+	-o-ime-mode:inactive;
+	ime-mode:inactive; 
+}
+/* ime-mode 영문만 */
+.ime-eng-only{
+	-webkit-ime-mode:disabled; 
+	-moz-ime-mode:disabled; 
+	-ms-ime-mode:disabled; 
+	-o-ime-mode:disabled;
+	ime-mode:disabled; 
+} 
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* List Option */
+.list-option {font-size:12px; font-weight:bold; margin-top: -3px; margin-bottom: 3px; padding:8px 5px 5px 5px; background-color:#f2f2f2; border:1px solid #6C6C71; border-top:0px;}
+.list-option i {cursor:pointer; cursor:hand;}
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Pagenation */
+.pagenation {text-align:center;}
+.pagination {margin:0px 10px; border-radius:2px; overflow:hidden;}
+.pagination-sm > li > a, 
+.pagination-sm > li > span {padding:2px 6px;}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, 
+.pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+	z-index: 0;
+} 
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* 기초관리(Basic) */
+.settings {margin: 0 auto; margin-bottom: 10px;}
+.settings .active {font-weight: bold; color: #353d41; background-color: #c3f2e8; border-color: #ddd;}
+.settings .list-group-item {padding: 5px 10px;}
+.settings .list-group-item.active,
+.settings .list-group-item.active:hover,
+.settings .list-group-item.active:focus {color: #353d41; background-color: #c3f2e8; border-color: #ddd;}
+
+.reg-time-info {font-weight: bold; text-align: center; margin-top: 15px;}
+
+
+
+/* Footer */
+.footer-wrap {position:relative; width:100%; height:auto; }
+.footer-wrap .container {background-color:#fff; border:1px solid #d2d2d2; padding-bottom:15px;}
+.footer-wrap .btn-wrap {position:relative; text-align:center; margin-top:20px;}
+.footer-wrap .btn-wrap ul li {margin:0px 5px; display:inline-block;}
+.footer-wrap .btn-wrap ul li a {font-weight:bold; color:#260809; display:block; padding:5px; text-decoration:none; border:1px solid #d2d2d2;}
+.footer-wrap .btn-wrap ul li a:hover {border:1px solid #260809;}
+
+.footer-wrap .copy-wrap {position:relative; text-align:center;}
+.footer-wrap .copy-wrap p {margin-bottom:0px;}
+/*.footer-wrap .copy-wrap p:last-child {margin-bottom:15px;}*/
+
+
+
+/*---------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+/* 프린트 관련 */
+@media print {
+	body {background:none;}
+	.navbar, .footer-wrap, .sidebar, .no-print, #print, .list-option {display:none !important;} /* 프린트 시 해당 tag 및 class를 숨기고자 할 때 사용한다. 이 css에 계속 추가해서 사용하도록 한다. */
+	.content-wrap {padding:0; border:0px;}
+	.container {border:0px;}
+	.content {padding:5px; border:0px; min-height:100px !important;}
+}
