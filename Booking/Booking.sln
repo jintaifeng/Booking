@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking", "Booking\Booking.csproj", "{F1C438D0-389D-4774-A6E6-54F16289E49F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Juppiphis.Data", "Juppiphis.Data\Juppiphis.Data.csproj", "{5BA548EB-389B-4CBD-9555-474D987B5537}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Entities", "Booking.Entities\Booking.Entities.csproj", "{BAC6F201-5604-4C0E-B13E-F9B15162DF1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{F1C438D0-389D-4774-A6E6-54F16289E49F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1C438D0-389D-4774-A6E6-54F16289E49F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1C438D0-389D-4774-A6E6-54F16289E49F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BA548EB-389B-4CBD-9555-474D987B5537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BA548EB-389B-4CBD-9555-474D987B5537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BA548EB-389B-4CBD-9555-474D987B5537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BA548EB-389B-4CBD-9555-474D987B5537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAC6F201-5604-4C0E-B13E-F9B15162DF1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAC6F201-5604-4C0E-B13E-F9B15162DF1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAC6F201-5604-4C0E-B13E-F9B15162DF1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAC6F201-5604-4C0E-B13E-F9B15162DF1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

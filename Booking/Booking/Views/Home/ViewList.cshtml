@@ -1,0 +1,1068 @@
+﻿
+ <div class="content">
+        <form name="form" method="post" action="/booking/view.htm">
+            <input id="link_click" type="hidden" value="/booking/view.htm?cur_page=&&&s_date=2016-10-01&l_date=2016-11-30&lst_date=예약일">
+
+            <!--hidden 값-->
+            <input type="hidden" name="head" id="head" value="">
+            <input type="hidden" name="check_photo" id="check_photo" value=""><!--사진 옵션 값-->
+            <!--common_insert_data(insert_data) 함수에서 필요-->
+            <input type="hidden" name="find" id="find" value="">
+            <input type="hidden" name="find_get_value" id="find_get_value" value=""><!--찾을 값-->
+            <input type="hidden" name="target_class_name" id="target_class_name" value=""><!--클릭시 값이 들어갈 class의 name-->
+            <input type="hidden" name="target_class_index" id="target_class_index" value=""><!--클릭시 값이 들어갈 class의 index 즉 위치-->
+            <input type="hidden" name="from_where_window" id="from_where_window" value=""><!--어디에서 불러왔는지에 따라 다른 함수를 실행한다. -->
+            <!-- Menu Title -->
+            <ul class="list-group menu-title">
+                <li class="list-group-item list-group-item-info">부킹 관리</li>
+            </ul>					<!--//Menu Title -->
+
+            <div class="panel-body">
+                <div class="form-group">
+
+                    <select name="lst_golf_place">
+                        <option value="" selected>골프장구분</option>
+                        <option value='1008'>글렌로스</option>
+                        <option value='1015'>더플레이어스</option>
+                        <option value='1209'>썬힐</option>
+                        <option value='1059'>안성베네스트</option>
+                        <option value='1065'>오너스</option>
+                        <option value='1096'>파가니카</option>
+                        <option value='1099'>포천힐스</option>
+                    </select>
+
+                    <select name="lst_booking_step">
+                        <option value="" selected>예약구분</option>
+                        <option value='완료'>완료</option>
+                        <option value='취소'>취소</option>
+                    </select>
+                    <select name="lst_balance_step">
+                        <option value="" selected>정산구분</option>
+                        <option value='완료'>완료</option>
+                        <option value='대기'>대기</option>
+                    </select>
+
+                </div><!--//.form-group -->
+
+                <div class="form-group">
+                    <select name="lst_date">
+                        <option value='예약일' selected>예약일</option>
+                        <option value='접수일'>접수일</option>
+                    </select>
+                    <input type="text" name="s_date" class="calendar only_date height-22" autocomplete="off" maxlength="10" id="s_date" value="2016-10-01"><label>~</label><input type="text" name="l_date" class="calendar only_date height-22" autocomplete="off" maxlength="10" id="l_date" value="2016-11-30">							<select name="lst_order">
+                        <option value="">정렬필드</option>
+                        <option value='booking.date'>접수일</option>
+                        <option value='booking.booking_date'>예약일</option>
+                        <option value='booking_DHM'>예약일시</option>
+                        <option value='company.company_id'>골프장명</option>
+                        <option value='booking.pay_field'>그린피-현장</option>
+                        <option value='booking.pay_first'>그린피-선입</option>
+                        <option value='booking.pay_field+booking.pay_first'>그린피-합계</option>
+                        <option value='booking.manager_commission'>수수료</option>
+                        <option value='booking.customer'>예약자</option>
+                        <option value='booking.customer_mobile'>예약자-전화</option>
+                        <option value='booking.people_num'>예약인원</option>
+                        <option value='booking.remark'>비고사항</option>
+                        <option value='booking.booking_step'>예약구분</option>
+                        <option value='booking.balance_step'>정산구분</option>
+                    </select><select name="lst_order_option" class="color-red" title="▲:낮은순 ▼:높은순" style="width:auto !important;">
+                        <option value='ASC'>▲</option>
+                        <option value='DESC'>▼</option>
+                    </select>
+                    <select name="lst_find">
+                        <option value=''>검색필드</option>
+                        <option value='booking.date'>접수일</option>
+                        <option value='booking.booking_date'>예약일</option>
+                        <option value='company.company_id'>골프장명</option>
+                        <option value='booking.pay_field'>그린피-현장</option>
+                        <option value='booking.pay_first'>그린피-선입</option>
+                        <option value='booking.pay_field+booking.pay_first'>그린피-합계</option>
+                        <option value='booking.manager_commission'>수수료</option>
+                        <option value='booking.customer'>예약자</option>
+                        <option value='booking.customer_mobile'>예약자-전화</option>
+                        <option value='booking.people_num'>예약인원</option>
+                        <option value='booking.remark'>비고사항</option>
+                        <option value='booking.booking_step'>예약구분</option>
+                        <option value='booking.balance_step'>정산구분</option>
+                    </select><select name="lst_find_option" class="color-red" style="width:auto !important;">
+                        <option value='%' selected title='비슷'>%</option>
+                        <option value='=' title='일치'>=</option>
+                        <option value='>=' title='이상'>>=</option>
+                        <option value='<=' title='이하'><=</option>
+                        <option value='>' title='초과'>></option>
+                        <option value='<' title='미만'><</option>
+                        <option value='!=' title='일치X'>!=</option>
+                        <option value='!%' title='비슷X'>!%</option>
+                        <option value='%~' title='뒷비슷'>%~</option>
+                        <option value='~%' title='앞비슷'>~%</option>
+                        <option value='□' title='빈것'>□</option>
+                        <option value='■' title='빈것X'>■</option>
+                    </select>
+                    <script type="text/javascript">
+	$(function(){
+		$("form #lst_num").click(function() {
+			$(this).select();
+		}).change(function(){
+			var data=$(this).val().replace(/\s+/g,"");
+			if(data!='' && parseInt(data,10)=='0'){
+				$(this).val('');
+			}
+		});
+
+		//목록수 조정 aSep :3지리 숫자에 컴마를 찍지 않게 조정
+		var someOptions = {vMin:'0', vMax:'1000', mDec:'0',aSep:''};	// http://www.decorplanit.com/plugin/참조
+		$('#lst_num').autoNumeric('init',someOptions);
+	});
+                    </script>
+                    <input type="text" name="lst_num" class="text-center only_tooltip" value="" id="lst_num" title="페이지당 목록수(최대1000)" autocomplete="off" style="width:25px !important;">
+                    <input type="search" results="10" name="txt_find" value="" id="txt_find" title="검색어" style="width:75px !important;">
+                    <script type="text/javascript">
+	$(function(){
+		if($('#txt_find').val()){
+			$('#txt_find').focus().select();
+		}
+		$("form #txt_find").on({
+			//가끔 IE9에서 placeholder가 없어지지 않아서..다음과 같이 처리..
+			//focus:function(){
+				//$(this).select();
+			//}
+		});
+	});
+                    </script>
+                    <div id="print">
+
+                        <button type="submit" class="btn btn-xs btn-success"><i class="fa fa-search"></i> 검색</button>
+                        <button type="button" class="btn btn-xs btn-warning" onclick="javascript:location.href='/booking/view.htm?&&lst_date=예약일'"><i class="fa fa-refresh"></i> 새로고침</button>
+                        <button type="button" class="btn btn-xs btn-primary" onclick="javascript:location.href='write.htm?mode=write'"><i class="fa fa-pencil"></i> 단독입력</button>
+
+                        <button type="button" class="btn btn-xs btn-primary" onclick="javascript:location.href='write_multi.htm?mode=write&line_count=10'"><i class="fa fa-pencil"></i> 멀티입력</button>
+
+                        <button type="button" class="btn btn-xs bg-purple prt only_tooltip" onclick="javascript:printPage('0');"><i class='fa fa-print fa-custom-2' title='출력'></i></button>																	<button type="button" class="btn btn-xs bg-green" onclick="javascript:save_excel();"><i class='fa fa-custom' title='액셀저장'>xls</i></button>
+
+                        <input type="checkbox" name="lst_view_delete" class="lst_view_delete only_tooltip" title="삭제까지보기" value="Y">(삭제)
+                        <input type="checkbox" name="lst_reple_hide" class="lst_reple_hide only_tooltip" title="댓글보지않기" value="Y">(댓글)
+                    </div>
+                </div><!--//.form-group -->
+            </div><!--//.panel-body -->
+
+            <input type="hidden" name="hidden_excel_sql" value="select++booking.%2A++%2Cconcat%28booking.booking_date%2C%27+%27%2Cbooking.booking_hour%2C%27%3A%27%2Cbooking.booking_bun%29+as+booking_DHM++%2C%28booking.pay_field%2Bbooking.pay_first%29+as+pay++%2Ccompany.company_id+as+golf_place_name+++%2Cmember.name+as+manager_name++from+booking++LEFT+JOIN+company+ON+booking.golf_place%3Dcompany.code++LEFT+JOIN+member+ON+booking.manager_id%3Dmember.id+where+++%28booking.booking_date+between+%272016-10-01%27+and++%272016-11-30%27%29++and+booking.action%21%3D%27%EC%82%AD%EC%A0%9C%27++and+booking.manager_id%3D%27gogolf1%27+++order+by++booking.no+desc++limit+0%2C20" title="액셀저장을위한SQL">
+            <div class="list-info">총  29   건 : 총2 페이지</div>
+
+            <div class="col-xs-12" style="margin-bottom:30px;">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">No</th>
+                                <th rowspan="2"><i class="fa fa-check color-red" onclick="checkbox_check_all();" title="전체 선택/해제"></i></th>
+                                <th rowspan="2">댓<br />글</th>
+                                <th rowspan="2">접수일</th>
+                                <th rowspan="2">예약일시</th>
+                                <th rowspan="2" style="width:70px !important;">예약자</th>
+                                <th rowspan="2" style="min-width:80px !important;">연락처</th>
+                                <th rowspan="2" style="min-width:90px !important;">골프장</th>
+                                <th rowspan="2">인원</th>
+                                <th colspan="2">그린피 결제(인당)</th>
+                                <th rowspan="2">수수료<br />(인당)</th>
+                                <th rowspan="2" style="width:90px !important;">비 고</th>
+                                <th rowspan="2">예약<br />구분</th>
+                                <th rowspan="2">정산<br />구분</th>
+                                <th rowspan="2" style="width:70px !important;">매니져</th>
+                                <th rowspan="2" style="width:80px !important;">에이전시</th>
+                            </tr>
+                            <tr>
+                                <th>현장</th>
+                                <th>선입</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr bgcolor="">
+                                <td>
+                                    1
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='16155'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="16155" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-10-10
+                                </td>
+                                <td><span class="color-red font-11">[목]</span>16-10-13 13:42</td>
+                                <td class="text-left ws-normal">강민수</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    오너스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">120,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    2
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='16154'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="16154" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-10-10
+                                </td>
+                                <td><span class="color-red font-11">[월]</span>16-10-24 07:39</td>
+                                <td class="text-left ws-normal">이상권</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    글렌로스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">140,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    3
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='16045'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="16045" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-10-09
+                                </td>
+                                <td><span class="color-red font-11">[일]</span>16-10-09 17:54</td>
+                                <td class="text-left ws-normal">김동기</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    포천힐스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">90,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    4
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='15941'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="15941" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-10-08
+                                </td>
+                                <td><span class="color-red font-11">[화]</span>16-10-11 07:22</td>
+                                <td class="text-left ws-normal">이경남</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    더플레이어스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">110,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal">식포</td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    5
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='15940'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="15940" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-10-08
+                                </td>
+                                <td><span class="color-red font-11">[일]</span>16-10-09 11:13</td>
+                                <td class="text-left ws-normal">박경삼</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    더플레이어스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">150,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    6
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='15805'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="15805" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-10-06
+                                </td>
+                                <td><span class="color-red font-11">[일]</span>16-10-09 13:49</td>
+                                <td class="text-left ws-normal">전동식</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    오너스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">120,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    7
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='15804'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="15804" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-10-06
+                                </td>
+                                <td><span class="color-red font-11">[일]</span>16-10-09 08:43</td>
+                                <td class="text-left ws-normal">장명보</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    오너스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">150,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    8
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='15453'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="15453" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-10-04
+                                </td>
+                                <td><span class="color-red font-11">[목]</span>16-10-06 13:12</td>
+                                <td class="text-left ws-normal">박상돈</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    더플레이어스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">150,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    9
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='15452'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="15452" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-10-04
+                                </td>
+                                <td><span class="color-red font-11">[금]</span>16-10-07 13:00</td>
+                                <td class="text-left ws-normal">박춘섭</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    오너스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">120,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    10
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='14968'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="14968" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-09-29
+                                </td>
+                                <td><span class="color-red font-11">[화]</span>16-10-04 13:06</td>
+                                <td class="text-left ws-normal">김동기</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    썬힐<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">100,000</td>
+                                <td class="text-right">
+                                    <span class='color-red only_tooltip' title='미입금'>10,000</span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    11
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='14967'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="14967" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-09-29
+                                </td>
+                                <td><span class="color-red font-11">[화]</span>16-10-04 12:59</td>
+                                <td class="text-left ws-normal">김동기</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    썬힐<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">100,000</td>
+                                <td class="text-right">
+                                    <span class='color-red only_tooltip' title='미입금'>10,000</span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    12
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='14966'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="14966" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-09-29
+                                </td>
+                                <td><span class="color-red font-11">[토]</span>16-10-01 07:33</td>
+                                <td class="text-left ws-normal">장우철</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    더플레이어스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">170,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    13
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='14565'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="14565" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-09-27
+                                </td>
+                                <td><span class="color-red font-11">[월]</span>16-10-03 13:19</td>
+                                <td class="text-left ws-normal">재병근</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    더플레이어스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">130,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    14
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='14564'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="14564" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-09-27
+                                </td>
+                                <td><span class="color-red font-11">[월]</span>16-10-03 10:27</td>
+                                <td class="text-left ws-normal">허재석</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    더플레이어스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">130,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="#FFCCCC">
+                                <td>
+                                    15
+                                </td>
+                                <td>
+                                    <input type='checkbox' disabled>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="14563" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-09-27
+                                </td>
+                                <td><span class="color-red font-11">[일]</span>16-10-02 12:22</td>
+                                <td class="text-left ws-normal">김준태</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    더플레이어스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">150,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal">우천취소</td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>취소</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    16
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='14433'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="14433" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-09-26
+                                </td>
+                                <td><span class="color-red font-11">[수]</span>16-10-05 11:21</td>
+                                <td class="text-left ws-normal">이성철</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    안성베네스트<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">150,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    17
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='14213'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="14213" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-09-24
+                                </td>
+                                <td><span class="color-red font-11">[월]</span>16-10-03 13:04</td>
+                                <td class="text-left ws-normal">김원용</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    파가니카<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">130,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    18
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='14153'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="14153" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-09-23
+                                </td>
+                                <td><span class="color-red font-11">[월]</span>16-10-03 11:57</td>
+                                <td class="text-left ws-normal">이광열</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    오너스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">120,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    19
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='14152'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="14152" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-09-23
+                                </td>
+                                <td><span class="color-red font-11">[일]</span>16-10-02 08:15</td>
+                                <td class="text-left ws-normal">김학철</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    오너스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">140,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                            <tr bgcolor="">
+                                <td>
+                                    20
+                                </td>
+                                <td>
+                                    <input type='checkbox' name='my_check' value='14151'>
+                                </td>
+                                <td><a href="#" class="modal_open_reple color-primary ud-btn" data-no="14151" data-mode="write"><i class='fa fa-rotate-180 fa-reply'></i></a></td>
+                                <td>
+                                    16-09-23
+                                </td>
+                                <td><span class="color-red font-11">[월]</span>16-10-03 07:40</td>
+                                <td class="text-left ws-normal">정미경</td>
+                                <td class="text-left"></td>
+                                <td class="text-left ws-normal">
+                                    오너스<br /><span class="color-red font-11"></span>
+                                </td>
+                                <td>4</td>
+                                <td class="text-right">140,000</td>
+                                <td class="text-right">
+                                    <span class='color-black only_popover' popover-content='' popover-title='입금 완료 내역'></span>
+                                </td>
+                                <td class="text-right"></td>
+                                <td class="text-left ws-normal"></td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-primary' disabled>완료</button>
+                                </td>
+                                <td>
+                                    <button type='button' class='btn btn-xs btn-danger' disabled>대기</button>
+                                </td>
+                                <td class="text-left ws-normal">강석수</td>
+                                <td class="text-left ws-normal"></td>
+                            </tr>
+                            <!--reple -->
+                            <!--reple 끝-->
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-ivory">
+                                <td colspan="7" class="text-bold text-right">완료 (19건)</td>
+                                <td class="text-bold text-right">&nbsp;</td>
+                                <td>76</td>
+                                <td class="text-right">9,840,000</td>
+                                <td class="text-right">80,000</td>
+                                <td class="text-right"></td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="text-bold text-right">&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr class="bg-gray-1">
+                                <td colspan="7" class="text-bold text-right">취소 (1건)</td>
+                                <td class="text-bold text-right">&nbsp;</td>
+                                <td>4</td>
+                                <td class="text-right">600,000</td>
+                                <td class="text-right"></td>
+                                <td class="text-right"></td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="text-bold text-right">&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div><!--//.table-responsive-->
+
+                <div class="list-option">
+                    <i class="fa fa-check color-red" onclick="checkbox_check_all();" title="전체 선택/해제"></i>
+                    <span>체크된 모든 것</span>&nbsp;&nbsp;&nbsp;
+                    <a href="#" onclick="check_all_delete('');">삭제</a>&nbsp;&nbsp;
+                </div>
+
+                <!-- Pagenation -->
+                <div class="pagenation">
+                    <ul class="pagination pagination-sm">
+                        <li class='active'><a href='#'>1 <span class='sr-only'>(current)</span></a></li>
+                        <li><a href='/booking/view.htm?cur_page=2&&&s_date=2016-10-01&l_date=2016-11-30&lst_date=예약일'>2</a></li>
+                    </ul>
+                </div>						<!--//Pagenation -->
+            </div><!--//.col-xs-12-->
+        </form>
+    </div><!--//.content-->
+
+@section Scripts {
+<style type="text/css">
+    .search-wrap .btn {
+        margin-bottom: 0px;
+    }
+
+    .table-none > tbody > tr > td:first-child {
+        min-width: 60px;
+        font-weight: bold;
+        padding: 10px 0px;
+        background: #f1f1f1;
+    }
+</style>
+
+<script type="text/javascript">
+		$(function(){
+			/* 댓글 보기 */
+			$(".lst_reple_hide").click(function(){
+				if($(this).prop('checked'))	var lst_reple_hide="Y";	// $('.re_remark').hide();
+				else						var lst_reple_hide="";	//$('.re_remark').show();
+				var link_click=$( "#link_click" ).val()+"&lst_reple_hide="+lst_reple_hide;
+				location.href=link_click;
+			});
+
+			$(".lst_view_delete").click(function(){
+				if($(this).prop('checked'))	var lst_view_delete="Y";	// $('.re_remark').hide();
+				else						var lst_view_delete="";		//$('.re_remark').show();
+				var link_click=$( "#link_click" ).val()+"&lst_view_delete="+lst_view_delete;
+				location.href=link_click;
+			});
+		});
+
+		function check_all_change(change_title,field){
+			var chked=get_count_checked_checkbox();	//체크된 개수 알아내기
+			var cart=get_cart_checked_checkbox();	//체크된 내용 가져오기
+			var limit_count=50;						//디폴트 지정
+			if(!chked) return false;
+			if(chked > limit_count){
+				alert('['+limit_count+']건 이하로 선택하기 바랍니다.');
+				return false;
+			}
+			var url='./change_all.htm?cart='+cart+'&change_title='+change_title+'&field='+field;
+			if(get_url_length(url)){ //URL길이체크후 넘기기
+				window.open(url,'check_all_change','width=500,height=400,resizable=yes,scrollbars=no');
+			}
+		}
+
+		/* 예약구분 변경 */
+		function change_booking_step_each(cart,booking_step){
+			$.ajax({
+				type:'POST',
+				url:'./loadData_change_booking_step.php',
+				data : {
+					cart:cart,
+					booking_step:booking_step
+				},
+				//async: false, //설정하지 않은면 true
+				dataType:'script',
+				success:function(){}
+			}); //ajax
+		}
+
+		/* 정산구분 변경 */
+		function change_balance_step_each(cart,balance_step){
+			$.ajax({
+				type:'POST',
+				url:'./loadData_change_balance_step.php',
+				data : {
+					cart:cart,
+					balance_step:balance_step
+				},
+				//async: false,	//설정하지 않은면 true
+				dataType:'script',
+				success:function(){}
+			}); //ajax
+		}
+
+		/* 삭제 */
+		function check_all_delete(limit_count){
+			var chked=get_count_checked_checkbox();	//체크된 개수 알아내기
+			var cart=get_cart_checked_checkbox();	//체크된 내용 가져오기
+			if(!limit_count) limit_count=50;		//디폴트 지정
+			if(!chked) return false;
+			if(chked > limit_count){
+				alert('['+limit_count+']건 이하로 선택하기 바랍니다.');
+				return false;
+			}
+			var my_message="총 ["+chked+"]건을 모두 삭제 하시겠습니까?";
+			if (confirm(my_message)){
+				if(get_url_length(cart)){	//URL길이체크후 넘기기
+					$.ajax({
+						type:'POST',
+						url:'./loadData_delete.php',
+						data : { cart:cart	},
+						//async: false, //설정하지 않은면 true
+						dataType:'script',
+						success:function(){}
+					}); //ajax
+				}
+			}
+		}
+		function check_all_somthing(sub_title){
+			 var chked=get_count_checked_checkbox();	//체크된 개수 알아내기
+			 var cart=get_cart_checked_checkbox();		//체크된 내용 가져오기
+
+			var limit_count=20;		//디폴트 지정
+			if(chked > limit_count){
+				alert('['+limit_count+']건 이하로 선택하기 바랍니다.');
+				return false;
+			}
+
+			if(!get_url_length(cart)){	//데이터 길이 확인
+				return false;
+			}
+
+			var my_url="";
+			if(sub_title=='입금_송금'){
+				if(chked)	my_url='./write_input_send.htm?cart='+cart;
+			}
+			if(my_url) window.open(my_url,'check_all_somthing','width=1200,height=800,resizable=yes,scrollbars=yes');
+		}
+
+		function save_excel(){
+			var myquery=$("[name=hidden_excel_sql]").val();	//액셀을 위한 SQL문장
+			var lst_num=$("[name=lst_num]").val();
+			myquery=encodeURIComponent(myquery);			//특수문자를 넘기기 위해 javascript의 encodeURIComponent 함수를 사용
+			var file_name="booking";
+			if(myquery){
+				var message="검색 결과를 액셀로 저장하시겠습니까?";
+				var my_url="./excel_save.htm?myquery="+myquery;
+
+				my_url+="&file_name"+file_name;	/* 파일이름 */
+				my_url+="&lst_num="+lst_num;	/* 리스트 수 */
+				if (confirm(message))	location.href=my_url;
+				else					return false;
+			}
+		}
+</script>
+   
+}
+

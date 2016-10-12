@@ -1,63 +1,297 @@
 ﻿@using Booking.Models
-@model LoginViewModel
 @{
-    ViewBag.Title = "登录";
+    ViewBag.Title = "OWNER GOLF";
 }
+<div class="content">
+    <form>
+        <div class="col-xs-12 login-wrap">
+            <div class="login-con">
+                <label for="user_id">아이디</label>
+                <div class="input-group">
+                    <input type="text" name="LoginName" class="only_focus_next only_tooltip form-control ime-eng" id="user_id" title="" data-original-title="아이디">
+                    <span class="input-group-addon only_tooltip" style="height: 22px; margin-top: 10px;" title="" data-original-title="저장"><input type="checkbox" name="RememberMe" id="check_id_save"></span>
+                </div>
+                <div class="clearfix"></div>
+                <label for="password">비밀번호</label>
+                <input type="password" name="Password" class="no_cut_copy_paste only_focus_next only_tooltip form-control ime-eng-only" id="password" title="" data-original-title="비밀번호">
+                <div class="clearfix"></div>
+                <button type="button" class="btn btn-block btn-flat btn-success only_focus_next" id="login_button"><b>로그인</b></button>
 
-<h2>@ViewBag.Title。</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>使用本地帐户登录。</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="登录" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("注册为新用户", "Register")
-                </p>
-                @* 在为密码重置功能启用帐户确认后启用此项
-                    <p>
-                        @Html.ActionLink("忘记了密码?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
-</div>
+                <div class="clearfix-last"></div>
 
+                <div class="login-btn">
+                    <div class="col-xs-4">@Html.ActionLink("회원가입", "Register", "Account")</div>
+                    <div class="col-xs-4">@Html.ActionLink("아이디 찾기", "Index", "Home")</div>
+                    <div class="col-xs-4">@Html.ActionLink("비밀번호 찾기", "Index", "Home")</div>
+                </div>
+            </div>
+        </div><!--//.col-xs-12-->
+  </form>
+</div><!--//.content-->	
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+<style type="text/css">
+    div[class*="col-"] {
+        margin: 0 auto;
+    }
+
+    .content-wrap {
+        padding-left: 0;
+    }
+
+    .content {
+        border: 0px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .col-xs-12 {
+        width: 30%;
+        min-width: 290px;
+        float: none;
+    }
+
+    input[type="text"], input[type="password"] {
+        width: 100%;
+        height: 34px;
+        font-weight: bold;
+        color: #999;
+        padding-left: 6px;
+        padding-right: 24px;
+    }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            color: #333;
+        }
+</style>
+<script type="text/javascript">
+
+		$(window).load(function(){
+			//기본 imemode 변경
+			$("input[type='text']").removeClass('ime-kor ime-eng-only').addClass('ime-eng');
+		});
+    	$(function () {
+			check_date();		//서버일자와 스크립트(PC) 일자가 다르면..로그인을 못하게 한다.
+			check_platform();	//플랫폼 점검
+			check_cookie();		//쿠키체크
+
+
+			//체크박스(아이디 저장) 클릭시
+			$("#check_id_save").on({
+				click:function(){ check_id_save(); }
+			});
+
+
+			//엔터시 키이동
+			$('.only_focus_next').keypress(function(e) {
+				var el=$('.only_focus_next');
+				var current_index=$(el).index(this);
+				var key = get_key_code();
+				if (key == 13) {
+					e.preventDefault();
+					var next_index = current_index + 1;
+					var total_length = $(el).length;	//총개수
+					if (next_index < total_length) {	//마지막이 아니라면..다음으로 포커스 이동
+						$(el).eq(next_index).focus().select();
+					}else{								//마지막이라면..바로 앞으로 포커스 이동
+						//$('form').submit();
+						$( "#login_button" ).trigger( "click" );
+					}
+				}
+			});
+			//로그인버튼 클릭시
+			$("form #login_button").on("click",function(){
+				login_submit();
+			});
+			//submit 하기 전에 점검사항..
+			//$("form").submit(function(){
+			//	return 	login_submit();
+			//});
+    	});
+
+
+		//서버일자와 스크립트(PC) 일자 다르면..로그인을 못하게 한다.
+    	function check_date() {
+    	    //서버일자
+    	    $.get('@Url.Action("GetServerDate","Common")', function (data) {
+    	        var server_date = data.ServerDate;
+    	        var script_date = get_script_date();
+
+    	        if (server_date && server_date != script_date) {
+
+    	            $('#login_button').attr('disabled', true);	//로그인을 못하게 한다.
+
+    	            var message = "";
+    	            message += "<strong>날짜 알림!</strong>";
+    	            message += "<br />서버 날짜(" + server_date + ")와";
+    	            message += "<br />현재 접속기기의 날짜(" + script_date + ")가 다릅니다";
+    	            message += "<br />접속기기날짜를 서버날짜로 조정후 로그인 하기 바랍니다.";
+
+    	            //$('#message_alert').html(message);
+    	            //bootstrap alerts 컴포넌트를 이용하여 메시지 표시
+    	            var temp_div = "<div class='alert alert-danger text-left' role='alert'>" + message + "</div>";
+    	            $('.clearfix-last').append(temp_div);
+    	        }
+    	    });
+		}
+
+		//스크립트(PC) 일자 구히기
+	    function get_script_date(){
+			var now = new Date();
+			year = now.getYear();
+			if((year + "").length <4) year = year + 1900;
+			month = now.getMonth() +1;
+			if((month + "").length <2) month = "0" + month;
+			date = now.getDate();
+			if((date + "").length <2) date = "0" + date;
+			today = year+"/"+month+"/"+date;
+			return today;
+    	}
+
+		//쿠키저장
+		function cookie_save(id){
+			if(id) 	setCookie("userid", id, 30);	// userid 쿠키에 id 값을 X일간 저장
+			else 	setCookie("userid", id, -1);	// userid 쿠키 삭제
+		}
+
+		// 쿠키값 설정
+		function setCookie(name, value, expiredays){
+		  var today = new Date();
+		  today.setDate( today.getDate() + expiredays );
+		  document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + today.toGMTString() + ";"
+		}
+
+		// 쿠키에서 ID값을 가져와서 로그인 정보 가져오기
+		function check_cookie(){
+		 	var id = getCookie("userid");	// userid 쿠키에서 id 값을 가져온다.
+		 	$('#user_id').focus();
+			if(id){
+		  		$('#user_id').val(id);
+				$('#user_id').select();
+		  		$('#check_id_save').prop('checked',true);
+		 	}
+		}
+
+		// 쿠키값 가져오기
+		function getCookie(key){
+			var cook = document.cookie + ";";
+			var idx =  cook.indexOf(key, 0);
+			var val = "";
+
+			if(idx != -1){
+				cook = cook.substring(idx, cook.length);
+				begin = cook.indexOf("=", 0) + 1;
+				end = cook.indexOf(";", begin);
+				val = unescape( cook.substring(begin, end) );
+			}
+			return val;
+		}
+
+		//ID저장기능 점검
+		function check_id_save(){
+			var user_id=$('#user_id').val();
+			var check_id_save=$('#check_id_save').prop('checked');
+			if(user_id){
+				if(check_id_save==true){
+					var message="";
+					message+="ID 저장 기능을 사용하시겠습니까?";
+					message+="\n단, 게임방, 학교등 공공장소에서 이용시 개인정보가 유출될수 있으니 조심하여 주십시요";
+					if(!confirm(message)) {
+						$('#check_id_save').attr('checked',false);
+					}
+					$('#password').focus();
+				}
+			}else{
+				alert('ID를 먼저 입력하시기 바랍니다.');
+				$('#check_id_save').prop('checked',false);
+				$('#user_id').focus();
+				return false;
+			}
+		}
+
+		//플랫폼 검색후 적당한 알림을 공지한다.
+		function check_platform(){
+			//쿠키값 검사 후 쿠기값이 있다면..더이상 메시지를 뛰우지 않는다.
+			//if(!getCookie("OSIE_message")){
+				var ua = window.navigator.userAgent;
+				var msie = ua.indexOf("MSIE ");
+				//IE 10 이하 버전체크
+				if (msie > 0){
+					var ie_version=parseInt(ua.substring(msie + 5, ua.indexOf(".", msie)));
+					if(ie_version < 9){	//9이하 버전에서는 메시지 출력
+						var message="";
+						message+="<strong>브라우저 호환성 알림!</strong>";
+						message+="<br />이 브라우저에서는 프로그램이 정상적으로 작동되지 않습니다.";
+						message+="<br />IE9 이상 버전를 사용하기 바랍니다.";
+
+						var temp_div="<div class='alert alert-info text-left' role='alert'>"+message+"</div>";
+						$('.clearfix-last').append(temp_div);
+
+						//message += "<br /><br />이 메시지를 더 이상 표지 하지 않겠습니까?";
+						//if(confirm(message)==true) {
+							//setCookie('OSIE_message', 'YES', '60');	//쿠키에 저장 이름,값,완료일
+						//}
+					}
+				}
+
+			//}
+			//아래 4줄은 브라우저 정보..
+			//alert(navigator.appName);	//브라우저 이름
+		    //alert(navigator.appCodeName);
+		    //alert(navigator.appVersion.substring(0,4));
+		    //alert(navigator.platform);
+			 //IE버전 확인 4.0 =>8, 5.0 =>9 , 6.0 =>10
+			// if(navigator.appVersion.indexOf('Trident/5.0') >= 0){
+				//	alert("IE 9버전입니다.");
+			// }
+		}
+
+		//점검...
+		function login_submit(){
+			var user_id=$('#user_id').val();
+			var password=$('#password').val();
+
+			if(user_id==null || user_id=='') {
+				alert("아이디를 입력하여 주십시요");
+				$('#user_id').focus();
+				return false;
+			}
+
+			if(password==null || password=='') {
+				alert("비밀번호를 입력하여 주십시요");
+				$('#password').focus();	return false;
+			}
+			 //아디이 저장체크시 ID를 쿠키에 저장
+			 var check_id_save=$('#check_id_save').prop('checked');
+			if(check_id_save==true)	cookie_save(user_id);
+			else					cookie_save("");
+
+			//ajax를 통한 아이디 및 비밀번호 체크..
+			$.ajax({
+				type:'POST',
+				url: '@Url.Action("Login", "Account")',
+				data : {
+				    loginName: user_id,
+				    password: password
+				},
+				success: function (data) {
+				    if (data.isSuccess)
+				    {
+				        window.location.href = data.urlAction;
+				    }
+				    else {
+				        if (data.errorCode == 401)
+				            alert("[아이디] 또는 [비밀번호]가 일치하지 않습니다");
+				        else
+				            alert(data.message);
+				    }
+				    return data.isSuccess;
+				}
+			});
+
+		}
+</script>
 }
+
+

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Booking.Utilities.Attributes;
+using Booking.Utilities.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,24 +8,20 @@ using System.Web.Mvc;
 
 namespace Booking.Controllers
 {
-    public class HomeController : Controller
+    [CustomAuthorize]
+    public class HomeController : CustomController
     {
+      
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult About()
+        public ActionResult ViewList()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-
-        public ActionResult Contact()
+        public ActionResult ViewGroup()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }
