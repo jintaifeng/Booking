@@ -1,4 +1,5 @@
-﻿using Booking.Utilities.Attributes;
+﻿using Booking.Common;
+using Booking.Utilities.Attributes;
 using Booking.Utilities.Base;
 using System;
 using System.Collections.Generic;

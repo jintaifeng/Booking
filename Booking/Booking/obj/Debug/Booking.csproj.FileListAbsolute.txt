@@ -99,7 +99,6 @@ E:\个人项目\Booking\Booking\Booking\bin\Booking.pdb
 E:\个人项目\Booking\Booking\Booking\bin\Antlr3.Runtime.dll
 E:\个人项目\Booking\Booking\Booking\bin\EntityFramework.dll
 E:\个人项目\Booking\Booking\Booking\bin\EntityFramework.SqlServer.dll
-E:\个人项目\Booking\Booking\Booking\bin\Juppiphis.Data.dll
 E:\个人项目\Booking\Booking\Booking\bin\Microsoft.AI.Agent.Intercept.dll
 E:\个人项目\Booking\Booking\Booking\bin\Microsoft.AI.DependencyCollector.dll
 E:\个人项目\Booking\Booking\Booking\bin\Microsoft.AI.PerfCounterCollector.dll
@@ -131,7 +130,6 @@ E:\个人项目\Booking\Booking\Booking\bin\System.Web.WebPages.Deployment.dll
 E:\个人项目\Booking\Booking\Booking\bin\System.Web.WebPages.dll
 E:\个人项目\Booking\Booking\Booking\bin\System.Web.WebPages.Razor.dll
 E:\个人项目\Booking\Booking\Booking\bin\WebGrease.dll
-E:\个人项目\Booking\Booking\Booking\bin\Juppiphis.Data.pdb
 E:\个人项目\Booking\Booking\Booking\bin\Microsoft.AI.DependencyCollector.xml
 E:\个人项目\Booking\Booking\Booking\bin\Microsoft.AI.ServerTelemetryChannel.xml
 E:\个人项目\Booking\Booking\Booking\bin\Microsoft.AI.Web.xml
