@@ -1,6 +1,6 @@
-﻿create database Golf_Booking 
+﻿create database GolfBooking 
 
-use [Golf_Booking]
+use [GolfBooking]
 CREATE TABLE [dbo].[user] (
     [user_id]             UNIQUEIDENTIFIER DEFAULT NEWID() NOT NULL,
 	[login_name]          VARCHAR (50)         NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE [dbo].[user] (
 	PRIMARY KEY([user_id])
 );
 CREATE TABLE rbac_roles ( 
-    role_id    	UNIQUEIDENTIFIER DEFAULT NEWID() NOT NULL,
+    role_id    	int identity(1,1) NOT NULL,
     role_name  	nvarchar(50) NOT NULL,
     description	nvarchar(200) NULL,
     tstamp     	DATETIME NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE rbac_objects (
     PRIMARY KEY(object_id)
 )
 CREATE TABLE rbac_role_object ( 
-    rro_id     	UNIQUEIDENTIFIER DEFAULT NEWID() NOT NULL,
+    rro_id     	INT  identity(1,1) NOT NULL,
     roles_id   	int NOT NULL,
     object_id  	varchar(200) NOT NULL,
     description	nvarchar(200) NULL,
@@ -42,13 +42,14 @@ CREATE TABLE rbac_role_object (
     PRIMARY KEY(rro_id)
 )
 CREATE TABLE [dbo].[golf_course] (
-  [course_id]     UNIQUEIDENTIFIER DEFAULT NEWID() NOT NULL,
+  [course_id]     int identity(1,1) NOT NULL,
   [course_name]   NVARCHAR (50) NOT NULL,
+  [description]   NVARCHAR (200) NULL,
   PRIMARY KEY(course_id)
 );
 CREATE TABLE [dbo].[order] (
-  [order_id]   UNIQUEIDENTIFIER DEFAULT NEWID() NOT NULL,
-  [user_id]  int NOT NULL,
+  [order_id]  int identity(100,1) NOT NULL,
+  [user_id]  UNIQUEIDENTIFIER NOT NULL,
   [course_id]  int NOT NULL,
   [booking_name] nvarchar(50) not null,
   [phone]   varchar(50) not null,
@@ -65,6 +66,11 @@ CREATE TABLE [dbo].[order] (
   [description]    nvarchar(200)  null,
   [agency] nvarchar(50) null,
   PRIMARY KEY(order_id)
+);
+CREATE TABLE [dbo].[user_code] (
+	[user_id] UNIQUEIDENTIFIER not null,
+	[code] varchar(50) not null,
+	[tstamp]   DATETIME      NOT NULL
 );
 GO
 
