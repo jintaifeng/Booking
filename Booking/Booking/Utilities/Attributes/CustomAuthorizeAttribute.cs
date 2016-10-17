@@ -27,7 +27,7 @@ namespace Booking.Utilities.Attributes
                     try
                     {
                         serializeModel = serializer.Deserialize<User>(authTicket.UserData);
-                        newUser = new CustomPrincipal(authTicket.Name);
+                        newUser = new CustomPrincipal(serializeModel.Name, serializeModel.RoleName);
                         newUser.UserId = serializeModel.UserId;
                         newUser.LoginName = serializeModel.LoginName;
                         newUser.Email = serializeModel.Email;
@@ -35,6 +35,7 @@ namespace Booking.Utilities.Attributes
                         newUser.Phone = serializeModel.Phone;
                         newUser.Status = serializeModel.Status;
                         newUser.RoleId = serializeModel.RoleId;
+                        newUser.RoleName = serializeModel.RoleName;
                         newUser.UpdateTime = serializeModel.UpdateTime;
                         newUser.CreateTime = serializeModel.CreateTime;
                         HttpContext.Current.User = newUser;
@@ -46,9 +47,8 @@ namespace Booking.Utilities.Attributes
                         {
                             isAuth = true;
                         }
-                        else
-                        {
-                            HttpContext.Current.Response.Write("<script type='text/javascript'>alert('没有权限')</script>");
+                        else {
+                            isAuth = false;
                         }
                     }
                     catch (Exception)
@@ -63,7 +63,35 @@ namespace Booking.Utilities.Attributes
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            base.OnAuthorization(filterContext);
+            if (filterContext == null)
+            {
+                throw new ArgumentNullException("filterContext");
+            }
+
+            //判断用户是否登录
+            if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
+            {
+                //redirect to login page
+                filterContext.Result = new HttpUnauthorizedResult();
+                return;
+            }
+            else
+            {
+                if (!AuthorizeCore(filterContext.HttpContext))
+                {
+                    ContentResult content = new ContentResult();
+                    content.Content = "<script type='text/javascript'>alert('권한이 없습니다.');window.location.href='/Home/Index'</script>";
+                    filterContext.Result = content;
+                }
+                
+            }
+            //base.OnAuthorization(filterContext);
+        }
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+            ContentResult content = new ContentResult();
+            content.Content = "<script type='text/javascript'>alert('로그아웃 되었습니다.');window.location.href='/'</script>";
+            filterContext.Result = content;
         }
     }
 }

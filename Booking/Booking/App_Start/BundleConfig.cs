@@ -27,7 +27,9 @@ namespace Booking
 
             bundles.Add(new ScriptBundle("~/Scripts/common").Include(
                      "~/js/common.js",
-                     "~/js/common_jquery.js"));
+                     "~/js/common_jquery.js",
+                     "~/js/config.js")
+                     );
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/jquery-ui.min.css",

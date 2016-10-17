@@ -19,16 +19,16 @@ namespace Booking.Utilities.CustomUser
             }
             foreach (var item in role)
             {
-                if (item == this.RoleId.ToString())
+                if (item == this.RoleName.ToString())
                 {
                     return true;
                 }
             }
             return false;
         }
-        public CustomPrincipal(string UserId)
+        public CustomPrincipal(string userName, string userType)
         {
-            this.Identity = new GenericIdentity(UserId);
+            this.Identity = new GenericIdentity(userName, userType);
         }
         public string UserId { get; set; }
         public string LoginName { get; set; }
@@ -36,6 +36,7 @@ namespace Booking.Utilities.CustomUser
         public string Name { get; set; }
         public string Password { get; set; }
         public int RoleId { get; set; }
+        public string RoleName { get; set; }
         public string Phone { get; set; }
         public string Status { get; set; }
         public DateTime CreateTime { get; set; }

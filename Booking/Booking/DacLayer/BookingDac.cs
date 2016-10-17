@@ -10,10 +10,10 @@ using System.Web;
 
 namespace Booking.DacLayer
 {
-    public class OrderDac
+    public class BookingDac
     {
         DBHelper dh = new DBHelper();
-        public User CheckLogin(string userId, string userPassword)
+        public User BookingInsert(string userId, string userPassword)
         {
             User u = new User();
             try

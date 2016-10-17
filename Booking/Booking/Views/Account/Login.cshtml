@@ -64,6 +64,9 @@
         input[type="text"]:focus, input[type="password"]:focus {
             color: #333;
         }
+    ul .clause {
+        display:none;
+    }
 </style>
 <script type="text/javascript">
 
@@ -273,7 +276,8 @@
 				url: '@Url.Action("Login", "Account")',
 				data : {
 				    loginName: user_id,
-				    password: password
+				    password: password,
+				    returnUrl:'@ViewBag.ReturnUrl'
 				},
 				success: function (data) {
 				    if (data.isSuccess)

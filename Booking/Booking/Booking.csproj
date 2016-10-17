@@ -195,15 +195,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\MailHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DacLayer\AccountDac.cs" />
-    <Compile Include="DacLayer\OrderDac.cs" />
+    <Compile Include="DacLayer\BookingDac.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BaseResult.cs" />
+    <Compile Include="Models\BookingOrder.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -212,6 +214,7 @@
     <Compile Include="Utilities\CodeResult.cs" />
     <Compile Include="Utilities\CustomUser\CustomPrincipal.cs" />
     <Compile Include="Utilities\CustomUser\ICustomPrincipal.cs" />
+    <Compile Include="Utilities\EncryptionHelper.cs" />
     <Compile Include="Utilities\MD5Hash.cs" />
     <Compile Include="Utilities\SQLHelper.cs" />
   </ItemGroup>
@@ -221,6 +224,7 @@
     <Content Include="Content\common.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\Pager.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -229,6 +233,7 @@
     <Content Include="js\autoNumeric.min.js" />
     <Content Include="js\common.js" />
     <Content Include="js\common_jquery.js" />
+    <Content Include="js\config.js" />
     <Content Include="js\datepicker.js" />
     <Content Include="js\ie10-viewport-bug-workaround.js" />
     <Content Include="js\ko.js" />
@@ -248,6 +253,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Scripts\jquery.pager.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -258,6 +264,8 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Account\ForgotLoginName.cshtml" />
     <Content Include="Views\Account\RetrievePassword.cshtml" />
+    <Content Include="Views\Account\UserList.cshtml" />
+    <Content Include="Views\Booking\Write.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -282,9 +290,12 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Home\ViewList.cshtml" />
     <Content Include="Views\Home\ViewGroup.cshtml" />
+    <Content Include="Views\Account\UserInfo.cshtml" />
+    <Content Include="Views\Home\Clause.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="images\favicons\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

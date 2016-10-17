@@ -1,0 +1,226 @@
+﻿@{ 
+    Booking.Models.UserListQuery userList = (Booking.Models.UserListQuery) ViewBag.User;
+    int i = 0;
+}
+@model Booking.Models.User
+<div class="content">
+    <form id="userlistForm" name="form" method="post" action="/Account/UserList">
+        <input type="hidden" id="pageSize" name="PageSize" value="2" />
+        <input type="hidden" id="startNum" name="StartNum" value="@userList.PageData.StartNum"/>
+        <input type="hidden" id="pageNum" name="PageNum" value="@userList.PageData.PageNum" />
+        
+         <!-- Menu Title -->
+        <ul class="list-group menu-title">
+            <li class="list-group-item list-group-item-info">회원 관리</li>
+        </ul>					<!--//Menu Title -->
+
+        <div class="panel-body">
+            <div class="form-group">
+                <label>아이디:</label>
+                <input type="text" name="LoginName" value="@Model.LoginName" class="height-22" />
+                <label>이름:</label>
+                <input type="text" name="Name" value="@Model.Name" class="height-22" />
+                <label>핸드폰:</label>
+                <input type="text" name="Phone" value="@Model.Phone" class="height-22" />
+                <label>이메일:</label>
+                <input type="text" name="Email" value="@Model.Email" class="height-22" />                
+                <label>상태:</label>
+                <select id="status" name="Status">
+                    <option value='' selected></option>
+                    <option value='open'>Open</option>
+                    <option value='pending'>Pending</option>
+                    <option value='close'>Close</option>
+                </select>
+                <div id="print">
+                    <button type="submit" class="btn btn-xs btn-success"><i class="fa fa-search"></i> 검색</button>
+                </div>
+            </div><!--//.form-group -->
+        </div><!--//.panel-body -->
+        <div class="list-info">&nbsp;</div>
+        <div class="col-xs-12" style="margin-bottom:30px;">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">No</th>
+                            <th rowspan="2"><i class="fa fa-check color-red" onclick="checkbox_check_all();" title="전체 선택/해제"></i></th>
+                            <th rowspan="2">아이디</th>
+                            <th rowspan="2">이름</th>
+                            <th rowspan="2">이메일</th>
+                            <th rowspan="2">핸드폰</th>
+                            <th rowspan="2">상태</th>
+                            <th rowspan="2">가입시간</th>
+                            <th rowspan="2"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in userList.UserList)
+                        {
+                            int num = userList.PageData.StartNum + i;
+                            i = i + 1;
+                        <tr>
+                            <td>
+                                @num
+                            </td>
+                            <td>
+                                <input type='checkbox' name='my_check' value='@item.UserId'>
+                            </td>
+                            <td>@item.LoginName</td>
+                            <td>@item.Name</td>
+
+                            <td>@item.Email</td>
+                            <td>
+                                @item.Phone
+                            </td>
+                            <td>@item.Status</td>
+                            <td>
+                                @item.CreateTime
+                            </td>
+                            <td>
+                                @if (item.Status == "pending")
+                                {
+                                <button type='button' name="btn_verify" class='btn btn-xs btn-primary'>인증</button>
+                                }
+                                @if (item.Status != "close")
+                                {
+                                <button type='button' name="btn_del" class='btn btn-xs btn-danger'>삭제</button>
+                                }
+                            </td>
+
+                        </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+            </div><!--//.table-responsive-->
+            @if (Model.Status == "open" || Model.Status == "pending")
+            {
+            <div class="list-option">
+                <i class="fa fa-check color-red" onclick="checkbox_check_all();" title="전체 선택/해제"></i>
+                <span>체크된 모든 것</span>&nbsp;&nbsp;&nbsp;
+                @if (Model.Status == "pending")
+                {
+                <button type='button' id="multi_verify" class='btn btn-xs btn-primary'>인증</button>
+                }
+                <button type='button' id="multi_del" class='btn btn-xs btn-danger'>삭제</button>
+            </div>
+            }
+            <!-- Pagenation -->
+            <div id="pager" class="pagenation">
+            </div>		
+        	<!--//Pagenation -->
+        </div><!--//.col-xs-12-->
+    </form>
+</div><!--//.content-->
+
+@section Scripts {
+    <style type="text/css">
+        .search-wrap .btn {
+            margin-bottom: 0px;
+        }
+
+        .table-none > tbody > tr > td:first-child {
+            min-width: 60px;
+            font-weight: bold;
+            padding: 10px 0px;
+            background: #f1f1f1;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#status").val('@Model.Status');
+            BindPager();
+
+            $("button[name=btn_del]").click(function(){
+                var id="'"+$(this).parent().parent().find("input:checkbox[name='my_check']").val()+"'";
+                var my_message="삭제 하시겠습니까?";
+                if (confirm(my_message)){   
+                    update("c",id)
+                }
+            });  
+            $("button[name=btn_verify]").click(function(){
+                var id="'"+$(this).parent().parent().find("input:checkbox[name='my_check']").val()+"'";
+                var my_message="인증 하시겠습니까?";
+                if (confirm(my_message)){
+                    update("o",id)
+                }
+            }); 
+            $("#multi_del").click(function(){
+                var arr=[];
+                $("input:checkbox[name='my_check']:checked").each(function(){
+                    arr.push("'"+$(this).val()+"'");
+                });
+                if(arr.length==0)
+                {
+                    alert("삭제할 회원을 선택해주세요.");
+                    return false;
+                }
+                var my_message="모두 삭제 하시겠습니까?";
+                if (confirm(my_message)){
+                    var ids=arr.join(",");
+                    update("c",ids);
+                }
+            });  
+            $("#multi_verify").click(function(){
+                var arr=[];
+                $("input:checkbox[name='my_check']:checked").each(function(){
+                    arr.push($(this).val());
+                });
+                if(arr.length==0)
+                {
+                    alert("인증할 회원을 선택해주세요.");
+                    return false;
+                }
+                var my_message="모두 인증 하시겠습니까?";
+                if (confirm(my_message)){ 
+                    var ids=arr.join(",");
+                    update("o",ids)
+                }
+            });  
+        });
+        function update(mode,ids){
+            $.ajax({
+                type:'POST',
+                url: '@Url.Action("UpdateUserStatus", "Account")',
+                data : {
+                    mode: mode,
+                    ids: ids
+                },
+                success: function (data) {
+                    if (data.isSuccess)
+                    {
+                        if(mode=="o")
+                            alert("인증 성공하였습니다.");
+                        else if(mode=="c")
+                            alert("삭제 성공하였습니다.");
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                    window.location.reload();
+                }
+            });
+        }
+        function BindPager() {
+            var pageSize = $("#pageSize").val();
+            $("#pager").empty();
+            var pageCount = Math.floor((parseInt(@userList.PageData.MaxCount) + parseInt(pageSize) - 1) / pageSize);
+            if (pageCount > 1) {
+                $("#pager").pager({
+                    pagenumber: @userList.PageData.PageNum, pagecount: pageCount,
+                    buttonClickCallback: function (pageclickednumber) {
+                        var startNum = (pageclickednumber - 1) * pageSize + 1;
+                        $("#startNum").val(startNum);
+                        $("#pageNum").val(pageclickednumber);
+                        $("#userlistForm").submit();
+                    }
+                });
+            }
+        }
+    </script>
+
+}
+

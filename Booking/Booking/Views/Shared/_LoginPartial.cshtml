@@ -1,24 +1,19 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-    @Html.AntiForgeryToken()
-
         <ul class="nav navbar-nav">
 
             <li id="realtime" class="login-info">
                 <span class="hide-nav"><i class="fa fa-clock-o"></i><span id="currentdate"></span></span>
             </li>
             <li class="login-info">
-                <a href="http://www.ownergolf.co.kr/basic_member/write.htm?mode=update&amp;from_write=out_side&amp;id=gogolf1" class="only_tooltip" title="" data-original-title="회원정보수정"><i class="fa fa-lock"></i> <span>강석수</span></a>
+                <a href='@Url.Action("UserInfo", "Account",new { mode="update"})' class="only_tooltip" title="" data-original-title="회원정보수정"><i class="fa fa-lock"></i> <span>@Context.User.Identity.Name</span></a>
                 <a href='@Url.Action("LogOut", "Account")'><i class="fa fa-sign-out"></i>로그아웃</a>
             </li>
-            <li class="hide-menu"><a href="http://www.ownergolf.co.kr/booking/view.htm"><i class="fa fa-book"></i> 부킹관리</a></li>
+            <li class="hide-menu"><a href="@Url.Action("ViewList","Home")"><i class="fa fa-book"></i> 부킹관리</a></li>
 
-            <li class="hide-menu"><a href="http://www.ownergolf.co.kr/booking/view_group.htm">&nbsp;&gt;&nbsp; 통계보기</a></li>
+            <li class="hide-menu"><a href="@Url.Action("ViewGroup","Home")">&nbsp;&gt;&nbsp; 통계보기</a></li>
         </ul>
-    }
 }
 else
 {

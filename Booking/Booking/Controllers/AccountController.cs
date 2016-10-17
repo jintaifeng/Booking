@@ -2,6 +2,7 @@
 using Booking.DacLayer;
 using Booking.Models;
 using Booking.Utilities;
+using Booking.Utilities.Attributes;
 using Booking.Utilities.Base;
 using System;
 using System.Collections.Generic;
@@ -20,22 +21,18 @@ namespace Booking.Controllers
     {
         public JavaScriptSerializer serializer = new JavaScriptSerializer();
         public AccountDac account = new AccountDac();
-        public ActionResult Login()
-
+        public ActionResult Login(string ReturnUrl)
         {
+            ViewBag.ReturnUrl = ReturnUrl;
             var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
             if (authCookie != null)
             {
-                //发放一个Expires为30分钟的cookie
-                HttpCookie cookie1 = new HttpCookie("IsContinue", "");
-                cookie1.Expires = DateTime.Now.AddMinutes(30);
-                Response.Cookies.Add(cookie1);
                 return RedirectToAction("Index", "Home");
             }
             return View();
         }
         [HttpPost]
-        public ActionResult Login(string loginName, string password)
+        public ActionResult Login(string loginName, string password,string returnUrl)
         {
             if (Request.IsAjaxRequest())
             {
@@ -45,6 +42,8 @@ namespace Booking.Controllers
                 {
                     CreateAuthenticationTicket(u);
                     string urlAction = Url.Action("Index", "Home");
+                    if (!string.IsNullOrEmpty(returnUrl))
+                        urlAction = returnUrl;
                     return Json(new
                     {
                         isSuccess = true,
@@ -61,7 +60,7 @@ namespace Booking.Controllers
                     }, JsonRequestBehavior.AllowGet);
                 }
             }
-            return RedirectToAction("Index", "Home");
+            return View();
         }
         public ActionResult LogOut()
         {
@@ -72,6 +71,7 @@ namespace Booking.Controllers
             HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
             cookie1.Expires = DateTime.Now.AddYears(-1);
             Response.Cookies.Add(cookie1);
+            //Response.Cookies.Remove(FormsAuthentication.FormsCookieName);
 
             // clear session cookie (not necessary for your current problem but i would recommend you do it anyway)
             HttpCookie cookie2 = new HttpCookie("ASP.NET_SessionId", "");
@@ -88,7 +88,7 @@ namespace Booking.Controllers
         {
             string userData = serializer.Serialize(user);
             HttpCookie cookie1 = new HttpCookie("IsContinue", "");
-            cookie1.Expires = DateTime.Now.AddMinutes(30);
+            //cookie1.Expires = DateTime.Now.AddMinutes(30);
             Response.Cookies.Add(cookie1);
 
             FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
@@ -169,18 +169,19 @@ namespace Booking.Controllers
                 result = account.GenerateCode(user.UserId, code);
                 if (result.Code == 0)
                 {
+                    var expireTime =Convert.ToInt16(ConfigurationManager.AppSettings["GenerateCodeExpire"].ToString())/60;
                     string domain = ConfigurationManager.AppSettings["domain"].ToString();
                     string link = string.Format("{0}/Account/RetrievePassword?id={1}&code={2}", domain,user.UserId,code);
                     string logo = ConfigurationManager.AppSettings["logo"].ToString();
                     string title = logo + " 비밀번호 찾기";
                     string body = string.Format(@"<p>{0}님, 안녕하세요.<p>
                             <p>{1} 비밀번호 찾기 메일입니다. </p>
-                            <p><b>비밀번호를 수정하기 위해 아래 링크를 클릭하세요.</b><p/>
+                            <p><b>비밀번호를 수정하기 위해 아래 링크를 클릭하세요. 유효기간은 {3}시간입니다.</b><p/>
                             <p>{2}</p>
                             <p>링크 클릭이 안되면 URL 전체를 복사하여 주소창에 붙여넣기 해주시기 바랍니다.<p/>
                             <p>감사합니다.</p>
                             <p>(본 메일은 발신전용 입니다.)</p>
-                            ", user.Name, logo, link);
+                            ", user.Name, logo, link, expireTime.ToString());
                     MailHelper.SendMail(title, body, email);
                     return Json(new { isSuccess = true, errorCode = result.Code }, JsonRequestBehavior.AllowGet);
                 }
@@ -191,6 +192,7 @@ namespace Booking.Controllers
             return Json(new { isSuccess = false, errorCode = user.BaseResult.Code }, JsonRequestBehavior.AllowGet);
 
         }
+
         public ActionResult RetrievePassword(string id,string code)
         {
             ViewBag.UserId = id;
@@ -199,9 +201,94 @@ namespace Booking.Controllers
             var result = account.CheckGenerateCode(id, code, expireTime);
             if (result.Code != 0)
             {
-                return Content("<script>alert('최고 수정기간을 초과하였습니다.\\n다시 비밀번호 찾기를 신청해주세요.');window.location.href='/Account/ForgotPassword';</script>");
+                return Content("<script>alert('유효기간을 초과하였습니다.\\n다시 비밀번호 찾기를 신청해주세요.');window.location.href='/Account/ForgotPassword';</script>");
             }
             return View();
         }
+
+        [HttpPost]
+        public ActionResult RetrievePassword(User user, string code)
+        {
+            BaseResult result = new BaseResult();
+            string expireTime = ConfigurationManager.AppSettings["GenerateCodeExpire"].ToString();
+            var check_result = account.CheckGenerateCode(user.UserId, code, expireTime);
+            if (check_result.Code == 0)
+            {
+                user.Password = MD5Hash.CreateMD5Hash(user.Password);
+                result = account.UpdateUserInfo(user);
+                if (result.Code == 0)
+                {
+                    return Content("<script>alert('비밀번호 설정 완료되습니다.');window.location.href='/Account/Login';</script>");
+                }
+                return Content("<script>alert('비밀번호 설정 실패하였습니다.';</script>");
+            }
+            else {
+                return Content("<script>alert('유효기간을 초과하였습니다.\\n다시 비밀번호 찾기를 신청해주세요.');window.location.href='/Account/ForgotPassword';</script>");
+            }
+        }
+
+        [CustomAuthorize]
+        public ActionResult UserInfo(string mode)
+        {
+            ViewBag.Mode = mode;
+            ViewBag.User = User;
+            return View();
+        }
+
+        [CustomAuthorize]
+        [HttpPost]
+        public ActionResult UpdateInfo(User user)
+        {
+            if (user.Password == "123456")
+                user.Password = string.Empty;
+            else
+                user.Password = MD5Hash.CreateMD5Hash(user.Password);
+
+            var result = account.UpdateUserInfo(user);
+            if (result.Code == 0)
+            {
+                var u = account.GetUserInfo(user.UserId);
+
+                string userData = serializer.Serialize(u);
+                FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
+                 1, user.UserId.ToString(), DateTime.Now, DateTime.Now.AddDays(7), true, userData);
+                string encTicket = FormsAuthentication.Encrypt(authTicket);
+                HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+                Response.Cookies.Add(faCookie);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return Content("<script>alert('회원정보를 수정 실패하였습니다.');</script>");
+        }
+
+        [CustomAuthorize(Roles = "Admin")]
+        public ActionResult UserList(User user,PageData page)
+        {
+            var result = account.GetUserInfoList(user, page);
+            ViewBag.User = result;
+            return View(user);
+        }
+
+        [CustomAuthorize(Roles = "Admin")]
+        public ActionResult UpdateUserStatus(string mode,string ids)
+        {
+            string status = "";
+            if (mode == "o")
+                status = "open";
+            else if (mode == "c")
+                status = "close";
+            else {
+                return Json(new { isSuccess = false, errorCode = 302, message = "파라미터를 정확히 보내주세요." }, JsonRequestBehavior.AllowGet);
+            }
+            var result = account.UpdateUserStatus(status, ids);
+            if(result.Code==0)
+            {
+                return Json(new { isSuccess = true, errorCode = result.Code }, JsonRequestBehavior.AllowGet);
+            }
+            else {
+                return Json(new { isSuccess = false, errorCode = result.Code, message=result.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }

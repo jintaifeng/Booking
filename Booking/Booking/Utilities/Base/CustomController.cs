@@ -20,13 +20,13 @@ namespace Booking.Utilities.Base
             var cookie = filterContext.HttpContext.Request.Cookies["IsContinue"];
             if (cookie != null)
             {
-                cookie.Expires = DateTime.Now.AddYears(-1);
-                cookie.Expires = DateTime.Now.AddMinutes(30);
+                //cookie.Expires = DateTime.Now.AddYears(-1);
+                //cookie.Expires = DateTime.Now.AddMinutes(30);
                 Response.Cookies.Add(cookie);
             }
             else
             {
-                // clear authentication cookie
+                //  clear authentication cookie
                 HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
                 cookie1.Expires = DateTime.Now.AddYears(-1);
                 Response.Cookies.Add(cookie1);

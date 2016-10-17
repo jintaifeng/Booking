@@ -1,0 +1,264 @@
+﻿
+<div class="content reg-wrap">
+    @using (Html.BeginForm("UpdateInfo", "Account", FormMethod.Post, new { @name = "form", @id = "MYFORM" }))
+    {
+        <input type="hidden" name="mode" id="mode" value="update">
+        <input type="hidden" name="from_write" id="from_write" value="out_side">
+        <input type="hidden" name="no" class="no" value="37">
+        <input type="hidden" name="UserId" class="old_id" value="@ViewBag.User.UserId">
+
+        <!-- Menu Title -->
+        <ul class="list-group menu-title">
+            <li class="list-group-item list-group-item-info">회원 수정</li>
+            <li class="list-group-item list-group-item-warning color-red menu-title-help">
+                <i class='fa fa-custom astrick'>*</i> 표시는 필수입니다.<br>비밀번호가 있어야 로그인이 가능합니다.<br>비밀번호 안전도 점검: <a href='#' class='only_tooltip' title='비밀번호가 얼마나 안전한가 점검해 보는 사이트<br />등록하고자 하는 비밀번호를 넣어보면 얼마만에 해커가 풀수 있는지 점검.<br />가능하면 특수문자를 포함해서 문자와수자를 혼합해서 사용하세요!' id='open_how_secure_passwd'>https://howsecureismypassword.net</a>
+            </li>
+        </ul>
+        <script>
+						$(function(){
+							/*안전도 점검 사이트 오픈*/
+							$("#open_how_secure_passwd").on({
+								click:function(){
+									var url=$(this).text();
+									window.open(url,'howsecureismypassword','top=10,width=600,height=500');
+								}
+							});
+						});
+        </script>
+        <!--//Menu Title -->
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th class="text-right" width="5%"><i class='fa fa-custom astrick'>*</i>아이디</th>
+                            <td class="text-left">
+                                <input type="text" class="id only_focus only_philsu " readonly value="@ViewBag.User.LoginName" >
+                                <span class="comment"> (변경 불가)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="text-right"><i class='fa fa-custom astrick'>*</i>비밀번호</th>
+                            <td class="text-left">
+                                <input type="password" name="Password" class="pw only_password only_focus only_philsu" value="123456">
+                                <button type="button" class="btn btn-xs bg-orange" onclick="delete_pw('pw');">지우기</button>
+                                <span class="comment"> 4자 이상(가능하면 특수문자를 포함해 영문,숫자를 혼용할것)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">비밀번호</th>
+                            <td class="text-left">
+                                <input type="password" name="ConfirmPassword" class="re_pw only_password only_focus" value="123456">
+                                <button type="button" class="btn btn-xs bg-orange" onclick="delete_pw('re_pw');">지우기</button>
+                                <span class="comment">(재확인)</span>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="text-right"><i class='fa fa-custom astrick'>*</i>이름</th>
+                            <td class="text-left">
+                                <input type="text" name="Name" class="name only_focus only_philsu only_delete_space only_HanEngNum" value="@ViewBag.User.Name" maxlength="20">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="text-right"><i class='fa fa-custom astrick'>*</i>핸드폰</th>
+                            <td class="text-left">
+                                <input type="text" name="Phone" value="@ViewBag.User.Phone" class="mobile only_mobile only_focus only_philsu" maxlength="15">
+                                <span class="comment"> (ex:0xx-xxxx-xxxx)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">이메일</th>
+                            <td class="text-left">
+                                <input type="text" name="Email" class="email only_email only_focus " value="@ViewBag.User.Email" maxlength="40">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="text-right"><i class='fa fa-custom astrick'>*</i>자동입력<br />방지</th>
+                            <td class="captcha-wrap">
+                                <img style="margin:8px; width:120px;height:30px" src="/Common/Code?sid=2011" alt="" id="captcha" />
+                                <a class="fa fa-refresh fa-2x only_tooltip" aria-hidden="true" title="이미지 새로고침" id="img_captcha_refresh"></a>
+                                <br />
+                                <input name="captcha_code" type="text" id="captcha_code" class="only_focus only_philsu only_delete_space_upper" maxlength="5">
+                                <span class="comment" id="captcha_message"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><!--//.table-responsive-->
+        </div><!--//.col-xs-12-->
+
+        <div class="col-xs-12">
+            <!--Button Group -->
+            <div class="btn-group-inline">
+                <div class="form-group button-group">
+                    &nbsp;<button type='button' class='btn btn-xs btn-success' name='button_write' id='button_update'><i class='fa fa-check'></i> 수정</button>&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' name='button_back' id='button_back'><i class='fa fa-step-backward'></i> 뒤로</button>&nbsp;
+                </div>
+            </div>
+            <!--//Button Group -->
+        </div><!--//.col-xs-12-->
+
+    }
+</div><!--//.content-->
+@section Scripts {
+    <style type="text/css">
+        body {
+            background: none;
+        }
+
+        .container {
+            border: 0px;
+        }
+
+        .content-wrap {
+            padding: 0;
+            border: 0px;
+        }
+
+        .content {
+            padding: 5px;
+            border: 0px;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .col-xs-12 {
+            margin-top: 0px !important;
+        }
+    </style>    <!--[      Custom Area      ]-->
+    <style type="text/css">
+        form {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .content-wrap {
+            position: relative;
+            height: auto;
+            border-left: 1px solid #d2d2d2;
+            border-right: 1px solid #d2d2d2;
+            padding-top: 55px;
+            background: #fff;
+        }
+
+        input[type="text"], input[type="password"], select {
+            width: 130px !important;
+            height: 25px !important;
+        }
+
+        .captcha-wrap input[type="text"] {
+            width: 150px !important;
+            margin-bottom: 10px;
+            margin-left: 10px;
+        }
+
+        .captcha-wrap .fa-refresh {
+            vertical-align: middle;
+            text-decoration: none;
+        }
+
+        .captcha-wrap .comment {
+            line-height: 25px;
+            vertical-align: top;
+        }
+    </style>
+
+    <script type="text/javascript">
+		re_gong = /\s+/g;	//공백제거
+		$(window).load(function(){
+			//window.resizeTo(700,750);
+			//$("form .only_focus").eq(0).focus();
+		});
+
+		$(function(){
+			$(".only_focus").removeClass('ime-kor ime-eng-only').addClass('ime-eng');
+			$(".name").removeClass('ime-eng ime-eng-only').addClass('ime-kor');
+
+			/*자동입력방지를 위한 이미지 표시*/
+			$("#captcha_code").on({
+				focus:function(){
+					$("#captcha_message").text('');
+				},
+				change:function(){
+				    var captcha = $(this).val();
+				    $.post('@Url.Action("VaildateCaptcha","Common")', { sid: 2011, captcha: captcha }, function(response){
+				        if (response.isSuccess) {
+							$("#captcha_message").text('');
+							$("#captcha_message").text('일치');
+							change_captcha();	/* captcha 이미지 새로고침*/
+						}else{
+							$("#captcha_message").text('');
+							$("#captcha_message").text('불일치');
+						}
+					});
+					return false;
+				}
+			 });
+			 /* captcha 이미지 새로고침*/
+			 $('#img_captcha_refresh').click(function() {
+				change_captcha();
+			 });
+
+			 function change_captcha(){
+				//document.getElementById('captcha').src="/captcha/get_captcha.php?rnd=" + Math.random();
+			     var captcha_img = '@Url.Action("Code", "Common")'+"?sid=2011&hash=" + new Date().valueOf();
+				$("#captcha").attr("src",captcha_img);
+			 }
+			 function captcha_message_check(){
+				if($('#from_write').val()=='out_side'){
+					var captcha_message=$("#captcha_message").text();
+					if(captcha_message!='일치'){
+						alert('자동입력방지 코드가 입력되지 않았거나 동일하지 않습니다.');
+						$('#captcha_code').focus().select();
+						return "NO";
+					}
+				}
+			}
+
+		    $("form .email").on({
+				change:function(){
+					var data=$(this).val();
+					if(data){
+						$.ajax({
+							type:'POST',
+							url: '@Url.Action("CheckEmail", "Account")',
+							data : {
+							    email: data
+							},
+							success: function (rData) {
+							    if (!returnData.isSuccess) {
+							        alert("이메일 이미 존재하였습니다,다른 이메일을 입력하세요")
+							        $('form .email').val('').focus().select();
+							    }
+							}
+						});
+					}
+				}//change
+			});
+			$('form #button_update').click(function(){
+				if(check_pw()=='NO')				return false;	/* 패스워드 체크후 */
+				if(captcha_message_check()=='NO')	return false;	/* captcha 메시지 체크후 */
+
+				write_question('');
+
+			});//수정버튼
+			$('form #button_back').click(function(){	history.go(-1);		});	//삭제버튼
+		});
+
+		function check_pw(){
+			var pw=$('.pw').val();
+			var re_pw=$('.re_pw').val();
+			if(pw && pw!=re_pw){
+				alert('비밀번호와 재확인용 비밀번호가 틀립니다.');
+				$('.re_pw').focus().select();
+				return "NO";
+			}
+		}
+		function delete_pw(check_class){
+			if(check_class=='pw')			$(".pw").val('').focus();
+			else if(check_class=='re_pw')	$(".re_pw").val('').focus();
+		}
+    </script>
+}

@@ -12,7 +12,6 @@ namespace Booking.Controllers
     [CustomAuthorize]
     public class HomeController : CustomController
     {
-      
         public ActionResult Index()
         {
             return View();
@@ -24,6 +23,11 @@ namespace Booking.Controllers
         public ActionResult ViewGroup()
         {
             return View();
-        }
+        }    
+        public ActionResult Clause(string mode)
+        {
+            ViewBag.Mode = mode;
+            return View();
+        }        
     }
 }
