@@ -1,4 +1,7 @@
-﻿<div class="content reg-wrap">
+﻿@{ 
+    ViewBag.Title = "회원";
+}
+<div class="content reg-wrap">
   @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @name = "form", @id = "MYFORM" }))
   {
         <input type="hidden" name="mode" id="mode" value="write">
@@ -388,7 +391,7 @@
 							data : {
 							    email: data
 							},
-							success: function (rData) {
+							success: function (returnData) {
 							    if (!returnData.isSuccess) {
 							        alert("이메일 이미 존재하였습니다,다른 이메일을 입력하세요")
 							        $('form .email').val('').focus().select();

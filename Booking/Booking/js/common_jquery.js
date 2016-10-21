@@ -366,19 +366,19 @@ $(function(){
 				var class_index=$('.only_date').index(this); //클래스의 index
 				var target_calss_name=$(this).prop('class');
 				
-				$.ajax({
-					type:'POST',
-					url:'/zconfig/common_php/loadData_check_date.php',
-					data : { 
-						date:data, //일자
-						class_index:class_index, //타켓아이디
-						target_calss_name:target_calss_name  //클래스 이름: calendar_max,calendar_min를 구분하여 범위 설정하기..
-					},
-					dataType:'script',
-					success:function(data,script){
-						//eval(script);
-					}
-				});
+				//$.ajax({
+				//	type:'POST',
+				//	url:'/zconfig/common_php/loadData_check_date.php',
+				//	data : { 
+				//		date:data, //일자
+				//		class_index:class_index, //타켓아이디
+				//		target_calss_name:target_calss_name  //클래스 이름: calendar_max,calendar_min를 구분하여 범위 설정하기..
+				//	},
+				//	dataType:'script',
+				//	success:function(data,script){
+				//		//eval(script);
+				//	}
+				//});
 				
 			}			
 		} //blur

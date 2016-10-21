@@ -1,11 +1,12 @@
 ﻿@{ 
+    ViewBag.Title = "회원관리";
     Booking.Models.UserListQuery userList = (Booking.Models.UserListQuery) ViewBag.User;
     int i = 0;
 }
 @model Booking.Models.User
 <div class="content">
     <form id="userlistForm" name="form" method="post" action="/Account/UserList">
-        <input type="hidden" id="pageSize" name="PageSize" value="2" />
+        <input type="hidden" id="pageSize" name="PageSize" value="20" />
         <input type="hidden" id="startNum" name="StartNum" value="@userList.PageData.StartNum"/>
         <input type="hidden" id="pageNum" name="PageNum" value="@userList.PageData.PageNum" />
         

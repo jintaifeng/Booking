@@ -1,6 +1,6 @@
 ﻿@using Booking.Models
 @{
-    ViewBag.Title = "OWNER GOLF";
+    ViewBag.Title = "GOgolf";
 }
 <div class="content">
     <form>
@@ -148,7 +148,7 @@
 			if((month + "").length <2) month = "0" + month;
 			date = now.getDate();
 			if((date + "").length <2) date = "0" + date;
-			today = year+"/"+month+"/"+date;
+			today = year+"-"+month+"-"+date;
 			return today;
     	}
 

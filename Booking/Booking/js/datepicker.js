@@ -68,7 +68,7 @@ $(function() {
 /*************아이콘 표시..*********************/
 	$('.calendar_icon').datepicker({
 		showOn: "button",
-		buttonImage: "/zconfig/jquery/plugin/datepicker/calendar.gif",
+		buttonImage: "/images/calendar.gif",
 		//buttonText: "<i class='fa fa-calendar'></i>",
 		buttonText: "클릭",
 		buttonImageOnly: true, 
@@ -89,7 +89,7 @@ $(function() {
 	$('.calendar_min_icon').datepicker({
 		minDate: cur_date,
 		showOn: "button",
-		buttonImage: "/zconfig/jquery/plugin/datepicker/calendar.gif",
+		buttonImage: "/images/calendar.gif",
 		buttonText: "클릭",
 		buttonImageOnly: true, 
 		
@@ -109,7 +109,7 @@ $(function() {
 		maxDate: cur_date,
 
 		showOn: "button",
-		buttonImage: "/zconfig/jquery/plugin/datepicker/calendar.gif",
+		buttonImage: "/images/calendar.gif",
 		buttonText: "클릭",
 		buttonImageOnly: true, 
 
@@ -130,7 +130,7 @@ $(function() {
 		minDate: min_day,
 		maxDate: max_day,
 		showOn: "button",
-		buttonImage: "/zconfig/jquery/plugin/datepicker/calendar.gif",
+		buttonImage: "/images/calendar.gif",
 		buttonText: "클릭",
 		buttonImageOnly: true, 
 		
@@ -149,7 +149,7 @@ $(function() {
 		minDate: cur_date,
 		maxDate: cur_date,
 		showOn: "button",
-		buttonImage: "/zconfig/jquery/plugin/datepicker/calendar.gif",
+		buttonImage: "/images/calendar.gif",
 		buttonText: "클릭",
 		buttonImageOnly: true, 
 		

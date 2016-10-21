@@ -6791,7 +6791,23 @@ th.visible-print,
 td.visible-print {
   display: none !important;
 }
-
+.glyphicon:empty {
+        width: 1em;
+}
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-plus-sign:before {
+    content: "\e081";
+}
 @media print {
   .visible-print {
     display: block !important;

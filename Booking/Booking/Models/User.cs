@@ -25,7 +25,7 @@ namespace Booking.Models
         public PageData() {
             this.StartNum = 1;
             this.PageNum = 1;
-            this.PageSize = 2;
+            this.PageSize = 20;
         }
         public int StartNum { get; set; }
         public int EndNum { get; set; }

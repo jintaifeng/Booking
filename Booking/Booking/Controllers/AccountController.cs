@@ -109,7 +109,14 @@ namespace Booking.Controllers
             user.Status = "pending";
             user.RoleId =1;
             result = account.InsertUser(user);
-            return Content("<script>alert('가입이 완료되습니다.\\n로그인을 위해서는 관리자의 승인이 필요합니다.\\n승인이 완료될때까지 대기하기 바랍니다');window.location.href='/Account/Login';</script>");
+            if (result.Code == 0)
+            {
+                return Content("<script>alert('회원가입이 완료되습니다.\\n로그인을 위해서는 관리자의 승인이 필요합니다.\\n승인이 완료될때까지 대기하기 바랍니다');window.location.href='/Account/Login';</script>");
+            }
+            else
+            {
+                return Content("<script>alert('회원가입이 실패하였습니다.');window.location.reload();</script>");
+            }
         }
         [HttpPost]
         public JsonResult CheckLoginName(string loginname)

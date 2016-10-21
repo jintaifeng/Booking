@@ -12,7 +12,7 @@ namespace Booking.Controllers
     {
         public ActionResult GetServerDate()
         {
-            string date = DateTime.Now.ToShortDateString().ToString();
+            string date = DateTime.Now.ToString("yyyy-MM-dd");
             return Json(new
             {
                 ServerDate = date

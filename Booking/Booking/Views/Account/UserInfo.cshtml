@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    ViewBag.Title = "회원정보";
+}
 <div class="content reg-wrap">
     @using (Html.BeginForm("UpdateInfo", "Account", FormMethod.Post, new { @name = "form", @id = "MYFORM" }))
     {

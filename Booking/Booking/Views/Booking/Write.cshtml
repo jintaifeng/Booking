@@ -1,10 +1,14 @@
-﻿
+﻿@{
+        ViewBag.Title = "부킹 등록";
+        var AppointmentDate = ViewBag.Mode == "update" ? Model.AppointmentDate.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd");
+        var BookingDate = ViewBag.Mode == "update" ? Model.BookingDate.ToString("yyyy-MM-dd") : "";
+}
+@model Booking.Models.BookingOrder
 <div class="content">
 
-    <form name="form" method="post" action="update.htm">
-        <input type="hidden" name="no" id="no" value="">
+    <form name="form" method="post" action="/Booking/BookingWrite">
+        <input type="hidden" name="OrderId" id="no" value="@Model.OrderId">
         <input type="hidden" name="mode" id="mode" value="@ViewBag.Mode">
-
         <!-- Menu Title -->
         <ul class="list-group menu-title">
             <li class="list-group-item list-group-item-info">부킹 등록</li>
@@ -24,9 +28,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input type="text" name="date" class="calendar_max_icon only_date date only_philsu" value="2016-10-17" readonly></td>
+                            <td><input type="text" name="AppointmentDate" class="calendar_max_icon only_date date only_philsu" value='@AppointmentDate' readonly></td>
                             <td>
-                                <select name="manager_id" class="manager_id only_focus only_philsu">
+                                <select name="UserId" class="manager_id only_focus only_philsu">
                                     <option value="@(((Booking.Utilities.CustomUser.CustomPrincipal)User).UserId)" selected>@Context.User.Identity.Name</option>
                                 </select>
                             </td>
@@ -41,41 +45,42 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr class="form_body">
-                            <th width="10%" class="ws-normal"><input type="hidden" name="uni_key[]" class="uni_key" value="2016101713235597304700">라운딩 예약일<i class='fa fa-custom astrick'>*</i></th>
+                            <th width="10%" class="ws-normal">라운딩 예약일<i class='fa fa-custom astrick'>*</i></th>
                             <td class="text-left">
-                                <input type="text" name="booking_date[]" class="only_date calendar_icon only_focus booking_date only_philsu" value="">
-                                <select name="booking_hour[]" class="booking_hour only_focus only_philsu">
+                                <input type="hidden" name=BookingDate value="@Model.BookingDate"/>
+                                <input type="text" id="booking_date" class="only_date calendar_icon only_focus booking_date only_philsu" value='@BookingDate'>
+                                <select id="booking_hour" class="booking_hour only_focus only_philsu">
                                     <option value="" selected>시</option>
-                                    <option value='04시'>04시</option>
-                                    <option value='05시'>05시</option>
-                                    <option value='06시'>06시</option>
-                                    <option value='07시'>07시</option>
-                                    <option value='08시'>08시</option>
-                                    <option value='09시'>09시</option>
-                                    <option value='10시'>10시</option>
-                                    <option value='11시'>11시</option>
-                                    <option value='12시'>12시</option>
-                                    <option value='13시'>13시</option>
-                                    <option value='14시'>14시</option>
-                                    <option value='15시'>15시</option>
-                                    <option value='16시'>16시</option>
-                                    <option value='17시'>17시</option>
-                                    <option value='18시'>18시</option>
-                                    <option value='19시'>19시</option>
-                                    <option value='20시'>20시</option>
+                                    <option value='4'>04시</option>
+                                    <option value='5'>05시</option>
+                                    <option value='6'>06시</option>
+                                    <option value='7'>07시</option>
+                                    <option value='8'>08시</option>
+                                    <option value='9'>09시</option>
+                                    <option value='10'>10시</option>
+                                    <option value='11'>11시</option>
+                                    <option value='12'>12시</option>
+                                    <option value='13'>13시</option>
+                                    <option value='14'>14시</option>
+                                    <option value='15'>15시</option>
+                                    <option value='16'>16시</option>
+                                    <option value='17'>17시</option>
+                                    <option value='18'>18시</option>
+                                    <option value='19'>19시</option>
+                                    <option value='20'>20시</option>
                                 </select>
-                                <select name="booking_bun[]" class="booking_bun only_focus only_philsu">
+                                <select id="booking_bun" class="booking_bun only_focus only_philsu">
                                     <option value="" selected>분</option>
-                                    <option value='00'>00분</option>
-                                    <option value='01'>01분</option>
-                                    <option value='02'>02분</option>
-                                    <option value='03'>03분</option>
-                                    <option value='04'>04분</option>
-                                    <option value='05'>05분</option>
-                                    <option value='06'>06분</option>
-                                    <option value='07'>07분</option>
-                                    <option value='08'>08분</option>
-                                    <option value='09'>09분</option>
+                                    <option value='0'>00분</option>
+                                    <option value='1'>01분</option>
+                                    <option value='2'>02분</option>
+                                    <option value='3'>03분</option>
+                                    <option value='4'>04분</option>
+                                    <option value='5'>05분</option>
+                                    <option value='6'>06분</option>
+                                    <option value='7'>07분</option>
+                                    <option value='8'>08분</option>
+                                    <option value='9'>09분</option>
                                     <option value='10'>10분</option>
                                     <option value='11'>11분</option>
                                     <option value='12'>12분</option>
@@ -137,18 +142,19 @@
                                         <tr>
                                             <th width="8%">골프장 <i class='fa fa-custom astrick'>*</i></th>
                                             <td width="*">
-                                                <select name="golf_place[]" class="golf_place only_focus only_philsu" style="width:98% !important;">
-                                                    <option value='' selected></option>
-                                                    <option value='8155'>1-제주패키지</option>
-                                                    <option value='4525'>1-해외건</option>
-                                                    <option value='5340'>1박2일패키지</option>
+                                                <select name="CourseId" class="golf_place only_focus only_philsu" style="width:98% !important;">
+                                                    <option value=''></option>
+                                                    @foreach (var item in ViewBag.Place)
+                                                    {
+                                                    <option value='@item.CourseId'>@item.CourseName</option>
+                                                    }
                                                 </select>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>인원</th>
                                             <td>
-                                                <select name="people_num[]" class="people_num only_focus only_philsu" style="width:60px !important;">
+                                                <select name="MemberNumber" class="people_num only_focus only_philsu" style="width:60px !important;">
                                                     <option value='4'>4명</option>
                                                     <option value='3'>3명</option>
                                                     <option value='2'>2명</option>
@@ -163,8 +169,8 @@
                         <tr>
                             <th>예약자<i class='fa fa-custom astrick'>*</i></th>
                             <td class="text-left">
-                                이름:<input type="text" name="customer[]" class="customer only_focus  only_delete_space only_philsu" value="" maxlength="20">
-                                연락처:<input type="text" name="customer_mobile[]" class="customer_mobile only_mobile only_focus" value="" maxlength="15">
+                                이름:<input type="text" name="BookingUserName" class="customer only_focus  only_delete_space only_philsu" value="@Model.BookingUserName" maxlength="20">
+                                연락처:<input type="text" name="Phone" class="customer_mobile only_mobile only_focus only_philsu" value="@Model.Phone" maxlength="15">
                             </td>
                         </tr>
                         <tr>
@@ -184,10 +190,10 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td class="text-center"><input type="text" name="pay_field[]" class="pay_field text-right only_focus only_auto_comma" value="" style="width:70px !important"></td>
-                                            <td class="text-center"><input type="text" name="pay_first[]" class="pay_first text-right only_focus only_auto_comma" value="" style="width:70px !important"></td>
-                                            <td class="text-center"><input type="text" name="pay_sub[]" class="pay_sub text-right only_auto_comma only_philsu" value="" readonly style="width:70px !important"></td>
-                                            <td class="text-center"><input type="text" name="pay_sub_total[]" class="pay_sub_total text-right only_auto_comma" value="" readonly style="width:70px !important"></td>
+                                            <td class="text-center"><input type="text" name="PayBalance" class="pay_field text-right only_focus only_auto_comma" value="@Model.PayBalance" style="width:70px !important"></td>
+                                            <td class="text-center"><input type="text" name="Deposit" class="pay_first text-right only_focus only_auto_comma" value="@Model.Deposit" style="width:70px !important"></td>
+                                            <td class="text-center"><input type="text" name="pay_sub" class="pay_sub text-right only_auto_comma only_philsu" value="@Model.SubTotal" readonly style="width:70px !important"></td>
+                                            <td class="text-center"><input type="text" name="Total" class="pay_sub_total text-right only_auto_comma only_philsu" value="@Model.Total" readonly style="width:70px !important"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -208,9 +214,9 @@
                                     <tbody>
                                         <tr>
                                             <td class="text-center">
-                                                <input type="text" name="manager_commission[]" class="manager_commission text-right only_auto_comma" value="" readonly>
+                                                <input type="text" name="Tax" class="manager_commission text-right only_auto_comma" value="@Model.Commission" readonly>
                                             </td>
-                                            <td class="text-center"><input type="text" name="manager_commission_total[]" class="manager_commission_total text-right only_auto_comma" value="" readonly></td>
+                                            <td class="text-center"><input type="text" name="TotalTax" class="manager_commission_total text-right only_auto_comma" value="@Model.TotalCommission" readonly></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -218,7 +224,7 @@
                         </tr>
                         <tr>
                             <th>비고사항</th>
-                            <td><input type="text" name="remark[]" class="remark only_focus" value="" maxlength="100" style="width:100%;"></td>
+                            <td><input type="text" name="Description" class="remark only_focus" value="@Model.Description" maxlength="100" style="width:100%;"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -229,8 +235,16 @@
             <!--Button Group -->
             <div class="btn-group-inline">
                 <div class="form-group button-group">
-                    &nbsp;<button type='button' class='btn btn-xs btn-success' name='button_write' id='button_insert'><i class='fa fa-check'></i> 등록</button>&nbsp;&nbsp;
-                    <button type='button' class='btn btn-xs btn-warning' name='button_back' id='button_back'><i class='fa fa-step-backward'></i> 뒤로</button>&nbsp;
+                    &nbsp;
+                    @if (ViewBag.Mode == "write")
+                    {
+                        <button type='button' class='btn btn-xs btn-success' name='button_write' id='button_insert'><i class='fa fa-check'></i> 등록</button>
+                    }
+                    @if (ViewBag.Mode == "update")
+                    {
+                        <button type='button' class='btn btn-xs btn-success' name='button_update' id='button_update'><i class='fa fa-check'></i> 수정</button>
+                    }
+                    &nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' name='button_back' id='button_back'><i class='fa fa-step-backward'></i> 뒤로</button>&nbsp;
                 </div>
             </div>
             <!--//Button Group -->
@@ -265,8 +279,12 @@
 		$(function(){
 			$("form .only_focus").removeClass('ime-eng ime-eng-only').addClass('ime-kor');
 			var mode=$("form #mode").val();
-			if(mode=='update'){
-				//change_philsu_message('0','OK');
+			if (mode == 'update') {
+			    $("#booking_hour").val("@Model.BookingDate.Hour");
+			    $("#booking_bun").val("@Model.BookingDate.Minute");
+			    $("select[name=CourseId]").val("@Model.CourseId");
+			    $("select[name=MemberNumber]").val("@Model.MemberNumber");
+			    $('.people_num_remark').text("@Model.MemberNumber");
 			}
 			/* jquery 플러그인 select박스 검색 */
 			$(".golf_place").select2({
@@ -278,7 +296,7 @@
 
 			//예약일이 접수일보다 큰지 체크
 			$('.booking_date').on('change blur', function (){
-				var i =$(this).index();
+				var i =0;
 				//alert(i);
 				loadData_check_booking_date(i);
 			});
@@ -286,9 +304,9 @@
 			//골프장 수수료구하기
 			$('.golf_place').on({
 				change:function(){
-					var golf_place=$(this).val();
-					var i =$(this).index();
-					var manager_id=$('.manager_id').val();
+					//var golf_place=0;
+					//var i =$(this).index();
+					//var manager_id=$('.manager_id').val();
 					//$.ajax({
 					//	type:'POST',
 					//	url:'',
@@ -307,7 +325,7 @@
 			//그린피 결제합계 구하기
 			$('.pay_field,.pay_first').on({
 				change:function(){
-					var i =$(this).index();
+					var i =0;
 					var pay_field=parseInt($('.pay_field').eq(i).autoNumeric('get'),10);	if(!pay_field) pay_field=0;
 					var pay_first=parseInt($('.pay_first').eq(i).autoNumeric('get'),10);	if(!pay_first) pay_first=0;
 					$('.pay_sub').eq(i).autoNumeric('set',pay_field+pay_first);
@@ -318,18 +336,22 @@
 			//인원변경시 구하기
 			$('.people_num').on({
 				change:function(){
-					var i =$(this).index();
+					var i =0;
 					get_pay_sub_total(i); //총인원합계구하기
 				}
 			});
 
 
 			$('form #button_insert').click(function(){
-				//check_customer_mobile();	/* 연락처 검사 후 등록 */
+			    //check_customer_mobile();	/* 연락처 검사 후 등록 */
+			    var bookingdate = $("#booking_date").val() + " "+$("#booking_hour").val() +":"+ $("#booking_bun").val();
+			    $("input[name=BookingDate]").val(bookingdate);
 				write_question('');
 			});	//등록버튼
 			$('form #button_update').click(function(){
-				//check_customer_mobile();	/* 연락처 검사 */
+			    //check_customer_mobile();	/* 연락처 검사 */
+			    var bookingdate = $("#booking_date").val() + " " + $("#booking_hour").val() + ":" + $("#booking_bun").val();
+			    $("input[name=BookingDate]").val(bookingdate);
 				write_question('');
 			});	//수정버튼
 			$('form #button_back').click(function(){	history.go(-1);	});	//삭제버튼
@@ -352,7 +374,7 @@
 		function loadData_check_booking_date(i){
 			var date=$('.date').val();
 			var booking_date = $('.booking_date').eq(i).val().replace(re_gong, "");
-			if (booking_date && date < booking_date)
+			if (booking_date && date > booking_date)
 			{
 			    alert("예약일은 접수일 보다 커야합니다");
 			    return false;

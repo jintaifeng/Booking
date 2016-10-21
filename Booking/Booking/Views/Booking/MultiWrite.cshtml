@@ -1,0 +1,437 @@
+﻿@{
+    ViewBag.Title = "부킹 등록";
+}
+<div class="content">
+
+    <form name="form" method="post" action="/Booking/MultiWrite">
+        <input type="hidden" name="no" id="no" value="">
+        <input type="hidden" name="mode" id="mode" value="write">
+
+        <!-- Menu Title -->
+        <ul class="list-group menu-title">
+            <li class="list-group-item list-group-item-info">부킹 등록</li>
+            <li class="list-group-item list-group-item-warning color-red menu-title-help">
+                <i class='fa fa-custom astrick'>*</i> 표시는 필수입니다.
+            </li>
+        </ul>					<!--//Menu Title -->
+
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th><i class='fa fa-custom astrick'>*</i>접수일</th>
+                            <th><i class='fa fa-custom astrick'>*</i>매니져</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" name="AppointmentDate" class="calendar_max_icon only_date date only_philsu" value="@DateTime.Now.ToString("yyyy-MM-dd")" readonly></td>
+                            <td>
+                                <select name="UserId" class="manager_id only_focus only_philsu">
+                                    <option value="@(((Booking.Utilities.CustomUser.CustomPrincipal)User).UserId)" selected>@Context.User.Identity.Name</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">No</th>
+                            <th rowspan="2">취소</th>
+                            <th rowspan="2">복사</th>
+                            <th rowspan="2">필수</th>
+                            <th rowspan="2"><i class='fa fa-custom astrick'>*</i>예약일<br />(라운딩)</th>
+                            <th rowspan="2"><i class='fa fa-custom astrick'>*</i>시간</th>
+                            <th rowspan="2"><i class='fa fa-custom astrick'>*</i>골프장명</th>
+                            <th rowspan="2">인원수</th>
+                            <th rowspan="2" style="max-width:60px !important;"><i class='fa fa-custom astrick'>*</i> 예약자</th>
+                            <th rowspan="2" style="min-width:85px !important;">연락처</th>
+                            <th colspan="3"><i class='fa fa-custom astrick'>*</i>그린피 결제(인당)</th>
+                            <th rowspan="2"> 수수료<br />(인당)</th>
+                            <th rowspan="2" style="min-width:90px !important;">비고</th>
+                        </tr>
+                        <tr>
+                            <th style="min-width:52px !important;">현장</th>
+                            <th style="min-width:52px !important;">선입</th>
+                            <th style="min-width:52px !important;">합계</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < 10; i++)
+                        {
+                        <tr class="form_body">
+                            <td class="color-red">
+                                @{var seq = i + 1;}
+                                @seq
+                            </td>
+                            <td>
+                                <button type='button' class='btn btn-xs btn-danger button_eraser'><i class='fa fa-eraser'></i></button>
+                            </td>
+                            <td>
+                                @if (i == 0)
+                                {
+                                    <button type='button' class='btn btn-xs btn-info' disabled><i class='fa fa-clone'></i></button>
+                                }
+                                else{
+                                    <button type='button' class='btn btn-xs btn-info button_copy'><i class='fa fa-clone'></i></button>
+                                }
+                            </td>
+                            <td><span class="label label-danger philsu_message ">NO</span><input type="hidden" class="philsu" name="[@i].philsu" value=""/></td>
+                            <td><input type="text" name="[@i].booking_date" class="only_date calendar_icon only_focus booking_date line_phisu_check" value=""></td>
+                            <td>
+                                <select name="[@i].booking_hour" class="booking_hour only_focus line_phisu_check">
+                                    <option value="" selected>시</option>
+                                    <option value='4'>04</option>
+                                    <option value='5'>05</option>
+                                    <option value='6'>06</option>
+                                    <option value='7'>07</option>
+                                    <option value='8'>08</option>
+                                    <option value='9'>09</option>
+                                    <option value='10'>10</option>
+                                    <option value='11'>11</option>
+                                    <option value='12'>12</option>
+                                    <option value='13'>13</option>
+                                    <option value='14'>14</option>
+                                    <option value='15'>15</option>
+                                    <option value='16'>16</option>
+                                    <option value='17'>17</option>
+                                    <option value='18'>18</option>
+                                    <option value='19'>19</option>
+                                    <option value='20'>20</option>
+                                </select>
+                                <select name="[@i].booking_bun" class="booking_bun only_focus line_phisu_check">
+                                    <option value="" selected>분</option>
+                                    <option value='0'>00</option>
+                                    <option value='1'>01</option>
+                                    <option value='2'>02</option>
+                                    <option value='3'>03</option>
+                                    <option value='4'>04</option>
+                                    <option value='5'>05</option>
+                                    <option value='6'>06</option>
+                                    <option value='7'>07</option>
+                                    <option value='8'>08</option>
+                                    <option value='9'>09</option>
+                                    <option value='10'>10</option>
+                                    <option value='11'>11</option>
+                                    <option value='12'>12</option>
+                                    <option value='13'>13</option>
+                                    <option value='14'>14</option>
+                                    <option value='15'>15</option>
+                                    <option value='16'>16</option>
+                                    <option value='17'>17</option>
+                                    <option value='18'>18</option>
+                                    <option value='19'>19</option>
+                                    <option value='20'>20</option>
+                                    <option value='21'>21</option>
+                                    <option value='22'>22</option>
+                                    <option value='23'>23</option>
+                                    <option value='24'>24</option>
+                                    <option value='25'>25</option>
+                                    <option value='26'>26</option>
+                                    <option value='27'>27</option>
+                                    <option value='28'>28</option>
+                                    <option value='29'>29</option>
+                                    <option value='30'>30</option>
+                                    <option value='31'>31</option>
+                                    <option value='32'>32</option>
+                                    <option value='33'>33</option>
+                                    <option value='34'>34</option>
+                                    <option value='35'>35</option>
+                                    <option value='36'>36</option>
+                                    <option value='37'>37</option>
+                                    <option value='38'>38</option>
+                                    <option value='39'>39</option>
+                                    <option value='40'>40</option>
+                                    <option value='41'>41</option>
+                                    <option value='42'>42</option>
+                                    <option value='43'>43</option>
+                                    <option value='44'>44</option>
+                                    <option value='45'>45</option>
+                                    <option value='46'>46</option>
+                                    <option value='47'>47</option>
+                                    <option value='48'>48</option>
+                                    <option value='49'>49</option>
+                                    <option value='50'>50</option>
+                                    <option value='51'>51</option>
+                                    <option value='52'>52</option>
+                                    <option value='53'>53</option>
+                                    <option value='54'>54</option>
+                                    <option value='55'>55</option>
+                                    <option value='56'>56</option>
+                                    <option value='57'>57</option>
+                                    <option value='58'>58</option>
+                                    <option value='59'>59</option>
+                                </select>
+                            </td>
+                            <td class="text-left">
+                                <select name="[@i].CourseId" class="golf_place only_focus line_phisu_check" style="width:120px !important;">
+                                    <option value='' selected></option>
+                                    @foreach (var item in ViewBag.Place)
+                                    {
+                                        <option value='@item.CourseId'>@item.CourseName</option>
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <select name="[@i].MemberNumber" class="people_num only_focus line_phisu_check" style="width:100% !important;">
+                                    <option value='4'>4</option>
+                                    <option value='3'>3</option>
+                                    <option value='2'>2</option>
+                                    <option value='1'>1</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="[@i].BookingUserName" class="customer only_focus  only_delete_space line_phisu_check" value="" maxlength="20"></td>
+                            <td><input type="text" name="[@i].Phone" class="customer_mobile only_mobile only_focus" value="" maxlength="15"></td>
+                            <td><input type="text" name="[@i].PayBalance" class="pay_field text-right only_focus only_auto_comma line_phisu_check" value=""></td>
+                            <td><input type="text" name="[@i].Deposit" class="pay_first text-right only_focus only_auto_comma line_phisu_check" value=""></td>
+                            <td>
+                                <input type="text" name="[@i].SubTotal" class="pay_sub text-right only_auto_comma" value="" readonly>
+                            </td>
+                            <td>
+                                <input type="text" name="[@i].Commission" class="manager_commission text-right only_auto_comma" value="" readonly>
+                             </td>
+                            <td><input type="text" name="[@i].Description" class="remark only_focus" value="" maxlength="100"></td>
+                        </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="bg-gray-1">
+                            <td style="height:30px;">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td colspan="10" class="comment text-left text-bold">
+                                <span class="color-blue">└&gt;</span>필수요건이 충족되면 <span class="label label-danger">NO</span> -> <span class="label label-primary">OK</span> 로 변경됩니다.
+                            </td>
+                            <td class="comment text-left text-bold">&nbsp;</td>
+                            <td class="comment text-left text-bold">&nbsp;</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div><!--//.col-xs-12-->
+
+        <div class="col-xs-12">
+            <!--Button Group -->
+            <div class="btn-group-inline">
+                <div class="form-group button-group">
+                    &nbsp;<button type='button' class='btn btn-xs btn-success' name='button_write' id='button_insert'><i class='fa fa-check'></i> 등록</button>&nbsp;&nbsp;<button type='button' class='btn btn-xs btn-warning' name='button_back' id='button_back'><i class='fa fa-step-backward'></i> 뒤로</button>&nbsp;
+                </div>
+            </div>
+            <!--//Button Group -->
+        </div><!--//.col-xs-12-->
+
+    </form>
+</div>
+    @section Scripts {
+        <style type="text/css">
+            .table > thead > tr > th {
+                padding: 3px;
+            }
+
+            .table > tbody > tr > td {
+                padding: 1px;
+            }
+
+            input[type="text"] {
+                width: 100%;
+            }
+
+            select {
+                width: auto !important;
+            }
+
+            .label {
+                padding: 6px;
+            }
+        </style>
+
+        <script type="text/javascript">
+            re_gong = /\s+/g; //공백제거
+
+            $(window).load(function () {
+                var mode = $("form #mode").val();
+                $("form .only_focus").eq(0).focus();
+            });
+
+            $(function () {
+                $("form .only_focus").removeClass('ime-eng ime-eng-only').addClass('ime-kor');
+                /* select박스 검색 */
+                $(".golf_place").select2({
+                    language: "ko"
+                    //tags: "true",	/*일치되지 않아도 입력가능*/
+                    //allowClear: true
+                });
+
+                /* 필수메시지 변경 */
+                $('.line_phisu_check').on({
+                    change: function () {
+                        var i = $(this).closest('tr').index();
+                        get_local_check_phisu_each(i);
+                    }
+                });
+
+                //취소버튼
+                $('.button_eraser').on({
+                    click: function () {
+                        var i = $(this).closest('tr').index();
+                        get_local_each_initialize(i);
+                    } //라인비우기
+                });
+
+                //복사버튼
+                $('.button_copy').on({
+                    click: function () {
+                        var i = $(this).closest('tr').index();
+                        get_local_each_copy(i);
+                    } //상위복사
+                });
+                //예약일이 접수일보다 큰지 체크
+                $('.booking_date').on('change blur', function () {
+                    var i = $(this).closest('tr').index();
+                    loadData_check_booking_date(i);
+                });
+
+                //골프장 수수료구하기
+                $('.golf_place').on({
+                    change: function () {
+                        var golf_place = $(this).val();
+                        var i = $(this).closest('tr').index();
+                        var manager_id = $('.manager_id').val();
+                        //$.ajax({
+                        //    type: 'POST',
+                        //    url: './loadData_manager_commission.php',
+                        //    data: {
+                        //        golf_place: golf_place,
+                        //        manager_id: manager_id,
+                        //        i: i
+                        //    },
+                        //    async: false,
+                        //    dataType: 'script',
+                        //    success: function () { }
+                        //});
+                    }
+                });
+
+                //그린피 결제합계 구하기
+                $('.pay_field,.pay_first').on({
+                    change: function () {
+                        var i = $(this).closest('tr').index();
+                        var pay_field = parseInt($('.pay_field').eq(i).autoNumeric('get'), 10); if (!pay_field) pay_field = 0;
+                        var pay_first = parseInt($('.pay_first').eq(i).autoNumeric('get'), 10); if (!pay_first) pay_first = 0;
+                        $('.pay_sub').eq(i).autoNumeric('set', pay_field + pay_first);
+                    }
+                });
+
+                $('form #button_insert').click(function () {
+                    //check_customer_mobile();	/*연락처 검사 후 등록*/
+                    var len=$(".philsu[value=OK]").length;
+                    write_question(len+'건 예약을 신청');
+                });	//등록버튼
+                $('form #button_back').click(function () { history.go(-1); });	//삭제버튼
+            });
+
+            //각 라인 초기화
+            function get_local_each_initialize(i) {
+                $(".form_body:eq(" + i + ") .people_num option:first").attr('selected', 'selected');	/*인원수는 첫번째 옵션으로 되돌리기*/
+
+                $(".golf_place").eq(i).val('').trigger("change");	/*select2 을 위한 값 세팅*/
+                $(".form_body:eq(" + i + ") input:not('.uni_key')").val('');
+                $(".form_body:eq(" + i + ") select:not('.people_num')").val('');
+            }
+            /* 필수여부체크 */
+            function get_local_check_phisu_each(i) {
+                var booking_date = $('.booking_date').eq(i).val();
+                var booking_hour = $('.booking_hour').eq(i).val();
+                var booking_bun = $('.booking_bun').eq(i).val();
+                var golf_place = $('.golf_place').eq(i).val();
+                var customer = $('.customer').eq(i).val();
+
+                //var pay_sub=parseInt($('.pay_sub').eq(i).autoNumeric('get'),10);
+                var pay_field = parseInt($('.pay_field').eq(i).autoNumeric('get'), 10); if (!pay_field) pay_field = 0;
+                var pay_first = parseInt($('.pay_first').eq(i).autoNumeric('get'), 10); if (!pay_first) pay_first = 0;
+
+                var pay_sub = pay_field + pay_first;
+
+                if (booking_date != '' && booking_hour != '' && booking_bun != '' && golf_place != '' && customer != '' && pay_sub != 0) {
+                    change_philsu_message(i, 'OK');	/*필수란 메시지 변경*/
+                } else {
+                    change_philsu_message(i, 'NO');	/*필수란 메시지 변경*/
+                }
+            }
+
+            /* 상위단 복사하기 */
+            function get_local_each_copy(i) {
+                var pre_i = parseInt(i - 1, 10);
+                $('.booking_date').eq(i).val($('.booking_date').eq(pre_i).val());
+                $('.booking_hour').eq(i).val($('.booking_hour').eq(pre_i).val());
+                $('.booking_bun').eq(i).val($('.booking_bun').eq(pre_i).val());
+
+                var pre_golf_place = $('.golf_place').eq(pre_i).val();
+                $(".golf_place").eq(i).val(pre_golf_place).trigger("change");	/* select2 을 위한 값 세팅 */
+                $('.golf_place').eq(i).val(pre_golf_place);
+
+                $('.people_num').eq(i).val($('.people_num').eq(pre_i).val());
+                $('.customer').eq(i).val($('.customer').eq(pre_i).val());
+                $('.customer_mobile').eq(i).val($('.customer_mobile').eq(pre_i).val());
+                $('.pay_option').eq(i).val($('.pay_option').eq(pre_i).val());
+
+                $('.pay_field').eq(i).val($('.pay_field').eq(pre_i).val());
+                $('.pay_first').eq(i).val($('.pay_first').eq(pre_i).val());
+                $('.pay_sub').eq(i).val($('.pay_sub').eq(pre_i).val());
+
+                $('.manager_commission').eq(i).val($('.manager_commission').eq(pre_i).val());
+                $('.remark').eq(i).val($('.remark').eq(pre_i).val());
+
+                get_local_check_phisu_each(i);	/* 필수항목체크 */
+            }
+            /* 예약일 검사 */
+            function loadData_check_booking_date(i) {
+                var date = $('.date').val();
+                var booking_date = $('.booking_date').eq(i).val().replace(re_gong, "");
+                if (booking_date && date > booking_date) {
+                    alert("예약일은 접수일 보다 커야합니다");
+                    return false;
+                }
+            }
+            /* 필수항목 메시지 변경 */
+            function change_philsu_message(i, message_option) {
+                $('.philsu').eq(i).val(message_option)
+                if (message_option == 'OK') $('.philsu_message').eq(i).removeClass('label-danger').addClass('label-primary').text('OK');
+                else $('.philsu_message').eq(i).removeClass('label-primary').addClass('label-danger').text('NO');
+            }
+
+            /* 예약자 연락처 검사   예약일이 토.일 이거나 8시 이전엔 경우. */
+            function check_customer_mobile() {
+                var message = true;
+
+                $(".philsu_message").each(function (index) {	//모든 philsu_message 조사
+                    var philsu_message = $(this).text();		//현재 each값
+                    if (philsu_message == 'OK') {
+                        var booking_date = $('.booking_date').eq(index).val();
+                        var customer_mobile = $('.customer_mobile').eq(index).val();
+                        var booking_hour = parseInt($('.booking_hour').eq(index).val(), 10); if (!booking_hour) booking_hour = 0;
+                        if (booking_date && booking_hour) {
+                            var yoil = common_get_yoil(booking_date);
+                            if ((yoil == '토' || yoil == '일' || booking_hour < 8) && !customer_mobile) {
+                                alert('오전 8시 이전 혹은 토.일인 경우\n예약자 연락처는 필수입니다.');
+                                $('.customer_mobile').eq(index).focus();
+                                message = false;
+                                return false;
+                            }
+                        }
+                    }
+                });
+
+                if (message) {
+                    write_question('');	/*입력 및 수정*/
+                }
+            }
+        </script>
+    }
