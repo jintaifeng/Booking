@@ -784,10 +784,10 @@ function get_cart_checked_checkbox(){
 	var cart="";  
 	var el=$("input:checkbox[name='my_check']");
 	$(el).each(function(){
-		if($(this).prop("checked"))			cart = cart + "||" + $(this).val();
+		if($(this).prop("checked"))			cart = cart + "," + $(this).val();
 	});
-	//제일 앞의 ||은 제거후 리턴한다.
-	cart=cart.substring(2); //index의 2이후 자른다.
+	//제일 앞의 ,은 제거후 리턴한다.
+	cart=cart.substring(1); //index의 1이후 자른다.
 	return cart;
 }
 //URL로 데이터 넘길때 체크 왜냐면 IE에서 넘길수 있는 최대 길이는 2083자이므로 

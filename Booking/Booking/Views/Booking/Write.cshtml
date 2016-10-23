@@ -192,7 +192,7 @@
                                         <tr>
                                             <td class="text-center"><input type="text" name="PayBalance" class="pay_field text-right only_focus only_auto_comma" value="@Model.PayBalance" style="width:70px !important"></td>
                                             <td class="text-center"><input type="text" name="Deposit" class="pay_first text-right only_focus only_auto_comma" value="@Model.Deposit" style="width:70px !important"></td>
-                                            <td class="text-center"><input type="text" name="pay_sub" class="pay_sub text-right only_auto_comma only_philsu" value="@Model.SubTotal" readonly style="width:70px !important"></td>
+                                            <td class="text-center"><input type="text" name="SubTotal" class="pay_sub text-right only_auto_comma only_philsu" value="@Model.SubTotal" readonly style="width:70px !important"></td>
                                             <td class="text-center"><input type="text" name="Total" class="pay_sub_total text-right only_auto_comma only_philsu" value="@Model.Total" readonly style="width:70px !important"></td>
                                         </tr>
                                     </tbody>
@@ -214,9 +214,9 @@
                                     <tbody>
                                         <tr>
                                             <td class="text-center">
-                                                <input type="text" name="Tax" class="manager_commission text-right only_auto_comma" value="@Model.Commission" readonly>
+                                                <input type="text" name="Commission" class="manager_commission text-right only_auto_comma" value="@Model.Commission" readonly>
                                             </td>
-                                            <td class="text-center"><input type="text" name="TotalTax" class="manager_commission_total text-right only_auto_comma" value="@Model.TotalCommission" readonly></td>
+                                            <td class="text-center"><input type="text" name="TotalCommission" class="manager_commission_total text-right only_auto_comma" value="@Model.TotalCommission" readonly></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -303,22 +303,20 @@
 
 			//골프장 수수료구하기
 			$('.golf_place').on({
-				change:function(){
-					//var golf_place=0;
-					//var i =$(this).index();
-					//var manager_id=$('.manager_id').val();
-					//$.ajax({
-					//	type:'POST',
-					//	url:'',
-					//	data : {
-					//		golf_place:golf_place,
-					//		manager_id:manager_id,
-					//		i:i
-					//	},
-					//	async: false,
-					//	dataType:'script',
-					//	success:function(){}
-					//});
+			    change: function () {
+					$.ajax({
+						type:'POST',
+						url: '/booking/getcommission',
+						data : {
+						    courseid: $(this).val()
+						},
+						success: function (r) {
+						    $('input[name=Commission]').autoNumeric('set', r.Data.Commission);
+						    var manager_commission = parseInt($('.manager_commission').autoNumeric('get'), 10); if (!manager_commission) manager_commission = 0;
+						    var people_num = parseInt($('.people_num').val(), 10); if (!people_num) people_num = 1;
+						    $('.manager_commission_total').autoNumeric('set', manager_commission * people_num);
+						}
+					});
 				}
 			});
 

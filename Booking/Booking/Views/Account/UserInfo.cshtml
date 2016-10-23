@@ -75,7 +75,7 @@
                                 <input type="text" name="Email" class="email only_email only_focus " value="@ViewBag.User.Email" maxlength="40">
                             </td>
                         </tr>
-                        <tr>
+                        @*<tr>
                             <th class="text-right"><i class='fa fa-custom astrick'>*</i>자동입력<br />방지</th>
                             <td class="captcha-wrap">
                                 <img style="margin:8px; width:120px;height:30px" src="/Common/Code?sid=2011" alt="" id="captcha" />
@@ -84,7 +84,7 @@
                                 <input name="captcha_code" type="text" id="captcha_code" class="only_focus only_philsu only_delete_space_upper" maxlength="5">
                                 <span class="comment" id="captcha_message"></span>
                             </td>
-                        </tr>
+                        </tr>*@
                     </tbody>
                 </table>
             </div><!--//.table-responsive-->
@@ -131,40 +131,42 @@
         }
     </style>    <!--[      Custom Area      ]-->
     <style type="text/css">
-        form {
-            width: 80%;
-            margin: 0 auto;
-        }
+    form {
+        width: 80%;
+        margin: 0 auto;
+    }
+    @@media (max-width:1200px) {
+        form {width:100%;}
+    }
+    .content-wrap {
+        position: relative;
+        height: auto;
+        border-left: 1px solid #d2d2d2;
+        border-right: 1px solid #d2d2d2;
+        padding-top: 55px;
+        background: #fff;
+    }
 
-        .content-wrap {
-            position: relative;
-            height: auto;
-            border-left: 1px solid #d2d2d2;
-            border-right: 1px solid #d2d2d2;
-            padding-top: 55px;
-            background: #fff;
-        }
+    input[type="text"], input[type="password"], select {
+        width: 130px !important;
+        height: 25px !important;
+    }
 
-        input[type="text"], input[type="password"], select {
-            width: 130px !important;
-            height: 25px !important;
-        }
+    .captcha-wrap input[type="text"] {
+        width: 150px !important;
+        margin-bottom: 10px;
+        margin-left: 10px;
+    }
 
-        .captcha-wrap input[type="text"] {
-            width: 150px !important;
-            margin-bottom: 10px;
-            margin-left: 10px;
-        }
+    .captcha-wrap .fa-refresh {
+        vertical-align: middle;
+        text-decoration: none;
+    }
 
-        .captcha-wrap .fa-refresh {
-            vertical-align: middle;
-            text-decoration: none;
-        }
-
-        .captcha-wrap .comment {
-            line-height: 25px;
-            vertical-align: top;
-        }
+    .captcha-wrap .comment {
+        line-height: 25px;
+        vertical-align: top;
+    }
     </style>
 
     <script type="text/javascript">
@@ -241,7 +243,7 @@
 			});
 			$('form #button_update').click(function(){
 				if(check_pw()=='NO')				return false;	/* 패스워드 체크후 */
-				if(captcha_message_check()=='NO')	return false;	/* captcha 메시지 체크후 */
+				//if(captcha_message_check()=='NO')	return false;	/* captcha 메시지 체크후 */
 
 				write_question('');
 

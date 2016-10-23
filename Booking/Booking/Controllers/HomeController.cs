@@ -17,15 +17,22 @@ namespace Booking.Controllers
         BookingDac booking = new BookingDac();
         public ActionResult Index()
         {
-            return View();
+            string userid = "";
+            if (User.RoleName != "Admin")
+                userid = User.UserId;
+            List<BookingGroup> list = new List<BookingGroup>();
+            list = booking.GetTodayBookingStatistics(userid);
+            return View(list);
         }
-        public ActionResult ViewList(BookingOrderListQuery orderQuery)
+        public ActionResult ViewList(BookingOrderListQuery orderQuery ,PageData page)
         {
             BookingOrderList list = new BookingOrderList();
             ViewBag.Place = booking.GetGolfPlace();
-            ViewBag.Query = orderQuery;
 
-            DateTime dt = DateTime.Now;
+            if (string.IsNullOrEmpty(orderQuery.DateType)) {
+                orderQuery.DateType = "booking_date";
+            }
+                DateTime dt = DateTime.Now;
             if (orderQuery.BeginDate.Year<2010)
             {
                 orderQuery.BeginDate = dt.AddDays(1 - dt.Day).AddMonths(-1);
@@ -34,21 +41,59 @@ namespace Booking.Controllers
             {
                 orderQuery.EndDate = dt.AddDays(1 - dt.Day).AddMonths(2).AddDays(-1);
             }
-            list = booking.GetBookingOrderList(orderQuery);
-            if (list.BaseResult.Code != 0)
-            {
-                return Content("<script>alert('조회 실패하였습니다.');window.location.href='/Home/Index';</script>");
-            }
+            if (User.RoleName == "Admin")
+                orderQuery.IsAdmin = true;
+            else
+                orderQuery.UserId = User.UserId;
+            ViewBag.Query = orderQuery;
+            list = booking.GetBookingOrderList(orderQuery, page);
             return View(list);
         }
-        public ActionResult ViewGroup()
+        public ActionResult ViewGroup(BookingOrderListQuery orderQuery)
         {
-            return View();
+            List<BookingStatistics> list = new List<BookingStatistics>();
+            ViewBag.Place = booking.GetGolfPlace();
+
+            if (string.IsNullOrEmpty(orderQuery.DateType))
+            {
+                orderQuery.DateType = "booking_date";
+            }
+            if (string.IsNullOrEmpty(orderQuery.SortFiled))
+            {
+                orderQuery.SortFiled = "booking_date";
+            }
+            if (string.IsNullOrEmpty(orderQuery.SortType))
+            {
+                orderQuery.SortType = "ASC";
+            }
+            DateTime dt = DateTime.Now;
+            if (orderQuery.BeginDate.Year < 2010)
+            {
+                orderQuery.BeginDate = dt.AddDays(1 - dt.Day);
+            }
+            if (orderQuery.EndDate.Year < 2010)
+            {
+                orderQuery.EndDate = dt.AddDays(1 - dt.Day).AddMonths(1).AddDays(-1);
+            }
+            if (User.RoleName == "Admin")
+                orderQuery.IsAdmin = true;
+            else
+                orderQuery.UserId = User.UserId;
+            ViewBag.Query = orderQuery;
+            list = booking.GetBookingStatistics(orderQuery);
+            return View(list);
         }    
         public ActionResult Clause(string mode)
         {
             ViewBag.Mode = mode;
             return View();
-        }        
+        }
+        [CustomAuthorize(Roles = "Admin")]
+        public ActionResult GolfPlace()
+        {
+            List<GolfPlace> placeList = new List<GolfPlace>();
+            placeList = booking.GetGolfPlace();
+            return View(placeList);
+        }
     }
 }

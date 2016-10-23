@@ -164,7 +164,10 @@ else if (ViewBag.Mode == "c2")
     div[class*="col-"] {
         margin: 0 auto;
     }
-
+    @@media (max-width: 650px) {
+			.content {width:100%;}
+			h4 {margin-top:0px;}
+		}
     .content-wrap {
         padding-left: 0;
     }

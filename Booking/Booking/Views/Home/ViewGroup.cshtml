@@ -1,72 +1,72 @@
 ﻿@{
-    ViewBag.Title = "예약일별 통계(취소건 제외)";
+    ViewBag.Title = "통계보기";
+    Booking.Models.BookingOrderListQuery query = (Booking.Models.BookingOrderListQuery)ViewBag.Query;
+    int i = 0;
 }
+@model IEnumerable<Booking.Models.BookingStatistics>
 <div class="content">
-        <form name="form" method="post" action="/booking/view_group.htm">
+        <form name="form" method="post" action="/home/viewgroup">
 
             <!--hidden 값-->
-            <input type="hidden" name="head" id="head" value="">
-            <input type="hidden" name="check_photo" id="check_photo" value=""><!--사진 옵션 값-->
-            <!--common_insert_data(insert_data) 함수에서 필요-->
-            <input type="hidden" name="find" id="find" value="">
-            <input type="hidden" name="find_get_value" id="find_get_value" value=""><!--찾을 값-->
-            <input type="hidden" name="target_class_name" id="target_class_name" value=""><!--클릭시 값이 들어갈 class의 name-->
-            <input type="hidden" name="target_class_index" id="target_class_index" value=""><!--클릭시 값이 들어갈 class의 index 즉 위치-->
-            <input type="hidden" name="from_where_window" id="from_where_window" value=""><!--어디에서 불러왔는지에 따라 다른 함수를 실행한다. -->
-            <!-- Menu Title -->
+                        <!-- Menu Title -->
             <ul class="list-group menu-title">
-                <li class="list-group-item list-group-item-info">예약일별 통계(취소건 제외)</li>
+                <li class="list-group-item list-group-item-info"><span class="group_field"></span> 통계(취소건 제외)</li>
             </ul>					<!--//Menu Title -->
 
             <div class="panel-body">
                 <div class="form-group">
-                    <select name="lst_golf_place">
-                        <option value="" selected>골프장구분</option>
-                        <option value='1008'>글렌로스</option>
-                        <option value='1015'>더플레이어스</option>
-                        <option value='1209'>썬힐</option>
-                        <option value='1059'>안성베네스트</option>
-                        <option value='1065'>오너스</option>
-                        <option value='1096'>파가니카</option>
-                        <option value='1099'>포천힐스</option>
+                    <select name="CourseId">
+                        <option value="">골프장구분</option>
+                        @foreach (var item in ViewBag.Place)
+                        {
+                            if (query.CourseId == item.CourseId)
+                            {
+                                <option value='@item.CourseId' selected>@item.CourseName</option>
+                            }
+                            else {
+                                <option value='@item.CourseId'>@item.CourseName</option>
+                            }
+
+                        }
                     </select>
 
-                    <select name="lst_booking_step">
-                        <option value="" selected>예약구분</option>
-                        <option value='완료'>완료</option>
-                        <option value='취소'>취소</option>
+                    <select name="BookingStatus">
+                        <option value="">예약구분</option>
+                        <option value='success'>완료</option>
+                        <option value='close'>취소</option>
                     </select>
-                    <select name="lst_balance_step">
-                        <option value="" selected>정산구분</option>
-                        <option value='완료'>완료</option>
-                        <option value='대기'>대기</option>
+                    <select name="SettleStatus">
+                        <option value="">정산구분</option>
+                        <option value='success'>완료</option>
+                        <option value='waiting'>대기</option>
                     </select>
 
                 </div><!--//.form-group -->
 
                 <div class="form-group">
-                    <select name="lst_date">
-                        <option value='예약일' selected>예약일</option>
-                        <option value='접수일'>접수일</option>
+                    <select name="DateType">
+                        <option value='booking_date' selected>예약일</option>
+                        <option value='appointment_date'>접수일</option>
                     </select>
-
-                    <input type="text" name="s_date" class="calendar only_date height-22" autocomplete="off" maxlength="10" id="s_date" value="2016-10-01"><label>~</label><input type="text" name="l_date" class="calendar only_date height-22" autocomplete="off" maxlength="10" id="l_date" value="2016-10-31">
+                    <input type="text" name="BeginDate" class="calendar only_date height-22" autocomplete="off" maxlength="10" id="s_date" value="@query.BeginDate.ToString("yyyy-MM-dd")">
+                    <label>~</label>
+                    <input type="text" name="EndDate" class="calendar only_date height-22" autocomplete="off" maxlength="10" id="l_date" value="@query.EndDate.ToString("yyyy-MM-dd")">	                    
                     <label>통계선택</label>
-                    <select name="lst_group">
-                        <option value='booking.date'>접수일별</option>
-                        <option value='booking.booking_date' selected>예약일별</option>
-                        <option value='company.company_id'>골프장별</option>
-                        <option value='booking.balance_step'>정산구분별</option>
+                    <select name="SortFiled">
+                        <option value='appointment_date'>접수일별</option>
+                        <option value='booking_date' selected>예약일별</option>
+                        <option value='course_name'>골프장별</option>
+                        <option value='settle_status'>정산구분별</option>
                     </select>
 
-                    <select name="lst_order_option" class="color-red" title="▲:낮은순 ▼:높은순" style="width:auto !important;">
+                    <select name="SortType" class="color-red" title="▲:낮은순 ▼:높은순" style="width:auto !important;">
                         <option value='ASC'>▲</option>
                         <option value='DESC'>▼</option>
                     </select>
                     <div id="print">
 
                         <button type="submit" class="btn btn-xs btn-success"><i class="fa fa-search"></i> 검색</button>
-                        <button type="button" class="btn btn-xs btn-warning" onclick="javascript:location.href='/booking/view_group.htm?&'"><i class="fa fa-refresh"></i> 새로고침</button>
+                        <button type="button" class="btn btn-xs btn-warning" onclick="javascript: location.reload();"><i class="fa fa-refresh"></i> 새로고침</button>
                         <button type="button" class="btn btn-xs bg-purple prt only_tooltip" onclick="javascript:printPage('0');"><i class='fa fa-print fa-custom-2' title='출력'></i></button>
                     </div>
                 </div><!--//.form-group -->
@@ -78,13 +78,11 @@
                         <thead>
                             <tr>
                                 <th rowspan="2">No</th>
-                                <th rowspan="2">예약일별</th>
+                                <th rowspan="2" class="group_field">예약일별</th>
                                 <th rowspan="2"><a href="javascript:void(0);" class="only_tooltip" title="인원 * 0.25">건수</a></th>
                                 <th rowspan="2">인원</th>
                                 <th colspan="3">그린피</th>
                                 <th rowspan="2">수수료</th>
-                                <th rowspan="2">입금액</th>
-                                <th rowspan="2">송금액</th>
                             </tr>
                             <tr>
                                 <th>현장</th>
@@ -92,174 +90,52 @@
                                 <th>합계</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="container">
+                            @foreach (var item in Model)
+                            {
+                                i = i + 1;
                             <tr>
-                                <td>1</td>
+                                <td>@i</td>
                                 <td class="text-left">
-                                    [토] 2016-10-01
+                                    @if (query.SortFiled == "appointment_date" || query.SortFiled == "booking_date")
+                                    {
+                                    <span class="sWeek color-red font-11"></span>
+                                    <span class="sDate">@Convert.ToDateTime(item.GroupValue).ToString("yyyy-MM-dd")</span>
+                                    }
+                                    else {
+                                        if (item.GroupValue == "success")
+                                        {
+                                            <span>완료</span>
+                                        }
+                                        else if (item.GroupValue == "waiting")
+                                        {
+                                            <span>대기</span>
+                                        }
+                                        else {
+                                            <span>@item.GroupValue</span>
+                                        }
+                                    }
                                 </td>
-                                <td>2.00</td>
-                                <td>8</td>
-                                <td class="text-right">1,240,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right">1,240,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
+                                <td>@item.OrderCount</td>
+                                <td>@item.PeopleNumber</td>
+                                <td class="text-right only_auto_comma">@item.PayBalance</td>
+                                <td class="text-right only_auto_comma">@item.Deposit</td>
+                                <td class="text-right only_auto_comma">@item.SubTotal</td>
+                                <td class="text-right only_auto_comma">@item.Commission</td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td class="text-left">
-                                    [일] 2016-10-02
-                                </td>
-                                <td>5.00</td>
-                                <td>20</td>
-                                <td class="text-right">2,480,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right">2,480,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td class="text-left">
-                                    [월] 2016-10-03
-                                </td>
-                                <td>9.00</td>
-                                <td>36</td>
-                                <td class="text-right">4,600,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right">4,600,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td class="text-left">
-                                    [화] 2016-10-04
-                                </td>
-                                <td>2.00</td>
-                                <td>8</td>
-                                <td class="text-right">800,000</td>
-                                <td class="text-right">80,000</td>
-                                <td class="text-right">880,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td class="text-left">
-                                    [수] 2016-10-05
-                                </td>
-                                <td>1.00</td>
-                                <td>4</td>
-                                <td class="text-right">600,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right">600,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td class="text-left">
-                                    [목] 2016-10-06
-                                </td>
-                                <td>1.00</td>
-                                <td>4</td>
-                                <td class="text-right">600,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right">600,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td class="text-left">
-                                    [금] 2016-10-07
-                                </td>
-                                <td>1.00</td>
-                                <td>4</td>
-                                <td class="text-right">480,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right">480,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td class="text-left">
-                                    [일] 2016-10-09
-                                </td>
-                                <td>4.00</td>
-                                <td>16</td>
-                                <td class="text-right">2,040,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right">2,040,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                            </tr>
-                            <tr>
-                                <td>9</td>
-                                <td class="text-left">
-                                    [화] 2016-10-11
-                                </td>
-                                <td>1.00</td>
-                                <td>4</td>
-                                <td class="text-right">440,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right">440,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td class="text-left">
-                                    [목] 2016-10-13
-                                </td>
-                                <td>1.00</td>
-                                <td>4</td>
-                                <td class="text-right">480,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right">480,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                            </tr>
-                            <tr>
-                                <td>11</td>
-                                <td class="text-left">
-                                    [월] 2016-10-24
-                                </td>
-                                <td>1.00</td>
-                                <td>4</td>
-                                <td class="text-right">560,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right">560,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                            </tr>
+                            }
                         </tbody>
                         <tfoot>
                             <tr class="bg-ivory">
                                 <td>&nbsp;</td>
                                 <td class="text-left">&nbsp;</td>
-                                <td>28.00</td>
-                                <td>112</td>
-                                <td class="text-right">14,320,000</td>
-                                <td class="text-right">80,000</td>
-                                <td class="text-right">14,400,000</td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
-                                <td class="text-right"></td>
+                                <td>@Model.Sum(m=>m.OrderCount)</td>
+                                <td>@Model.Sum(m => m.PeopleNumber)</td>
+                                <td class="text-right only_auto_comma">@Model.Sum(m => m.PayBalance)</td>
+                                <td class="text-right only_auto_comma">@Model.Sum(m => m.Deposit)</td>
+                                <td class="text-right only_auto_comma">@Model.Sum(m => m.SubTotal)</td>
+                                <td class="text-right only_auto_comma">@Model.Sum(m => m.Commission)</td>
+                                
                             </tr>
                         </tfoot>
                     </table>
@@ -281,6 +157,25 @@
         background: #f1f1f1;
     }
 </style>
+    <script type="text/javascript">
+        $(function () {
 
+            $("select[name=BookingStatus]").val('@query.BookingStatus');
+            $("select[name=SettleStatus]").val('@query.SettleStatus');
+            $("select[name=DateType]").val('@query.DateType');
+            $("select[name=BeginDate]").val('@query.BeginDate');
+            $("select[name=EndDate]").val('@query.EndDate');
+            $("select[name=SortFiled]").val('@query.SortFiled');
+            $("select[name=SortType]").val('@query.SortType');
+
+            $("#container").find("tr").each(function () {
+                if ('@query.SortFiled' == "appointment_date" || '@query.SortFiled' == "booking_date") {               
+                    var week = common_get_yoil($(this).find(".sDate").html());
+                    $(this).find(".sWeek").html("[" + week + "] ");
+                }
+            });
+            $(".group_field").html($("select[name=SortFiled]").find("option:selected").html());
+        });
+    </script>
 }
 

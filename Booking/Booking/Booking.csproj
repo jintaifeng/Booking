@@ -286,6 +286,8 @@
     <Content Include="Views\Account\RetrievePassword.cshtml" />
     <Content Include="Views\Account\UserList.cshtml" />
     <Content Include="Views\Booking\Write.cshtml" />
+    <Content Include="Views\Home\ViewGroup.cshtml" />
+    <Content Include="Views\Home\ViewList.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -308,11 +310,10 @@
     <Content Include="Views\Error\Authorize.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Home\ViewList.cshtml" />
-    <Content Include="Views\Home\ViewGroup.cshtml" />
     <Content Include="Views\Account\UserInfo.cshtml" />
     <Content Include="Views\Home\Clause.cshtml" />
     <Content Include="Views\Booking\MultiWrite.cshtml" />
+    <Content Include="Views\Home\GolfPlace.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

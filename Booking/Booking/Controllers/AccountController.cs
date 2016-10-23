@@ -107,7 +107,7 @@ namespace Booking.Controllers
             BaseResult result = new BaseResult();
             user.Password = MD5Hash.CreateMD5Hash(user.Password);
             user.Status = "pending";
-            user.RoleId =1;
+            user.RoleId =2;
             result = account.InsertUser(user);
             if (result.Code == 0)
             {

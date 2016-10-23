@@ -10,6 +10,11 @@
                 <a href='@Url.Action("UserInfo", "Account",new { mode="update"})' class="only_tooltip" title="" data-original-title="회원정보수정"><i class="fa fa-lock"></i> <span>@Context.User.Identity.Name</span></a>
                 <a href='@Url.Action("LogOut", "Account")'><i class="fa fa-sign-out"></i>로그아웃</a>
             </li>
+                @if (Context.User.Identity.AuthenticationType == "Admin")
+                {
+                    <li class="hide-menu"><a href="@Url.Action("UserList", "Account")"><i class="fa fa-book"></i> 회원관리</a></li>
+                        <li class="hide-menu"><a href="@Url.Action("GolfPlace", "Home")"><i class="fa fa-book"></i> 골프장관리</a></li>
+                }
             <li class="hide-menu"><a href="@Url.Action("ViewList","Home")"><i class="fa fa-book"></i> 부킹관리</a></li>
 
             <li class="hide-menu"><a href="@Url.Action("ViewGroup","Home")">&nbsp;&gt;&nbsp; 통계보기</a></li>

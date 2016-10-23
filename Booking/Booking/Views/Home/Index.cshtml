@@ -1,24 +1,34 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "GOgolf";
 }
-
+@model IEnumerable<Booking.Models.BookingGroup>
 <div class="content">
 
     <!-- Menu Title -->
     <ul class="list-group menu-title">
-        <li class="list-group-item list-group-item-info">2016-10-11 접수건</li>
+        <li class="list-group-item list-group-item-info">@DateTime.Now.ToString("yyyy-MM-dd") 접수건</li>
     </ul>				<!--//Menu Title -->
 
     <div class="col-xs-12">
         <div class="table-responsive">
             <table class="table table-bordered">
-                @*<thead>
-                <th>매니져</th>
-                <th>예약완료</th>
-                <th>취소완료</th>
-                </thead>*@
-                <tbody></tbody>
+                <thead>
+                    <tr>
+                        <th>매니져</th>
+                        <th>예약완료</th>
+                        <th>취소완료</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.UserName</td>
+                        <td>@item.SuccessCount 건</td>
+                        <td>@item.CloseCount 건</td>
+                    </tr>
+                    }
+                </tbody>
             </table>
         </div><!--//.table-responsive-->
     </div><!--//.col-xs-12-->

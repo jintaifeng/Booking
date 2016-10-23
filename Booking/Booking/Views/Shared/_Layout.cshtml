@@ -64,6 +64,11 @@
     <nav class="navbar navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 @if (Request.IsAuthenticated)
                 {
                     <a class="navbar-brand" href='@Url.Action("Index", "Home")'>GOgolf</a>
@@ -89,6 +94,7 @@
                    if (Context.User.Identity.AuthenticationType == "Admin")
                    {
                         <li class="hide-menu"><a href="@Url.Action("UserList", "Account")"><i class="fa fa-book"></i> 회원관리</a></li>
+                        <li class="hide-menu"><a href="@Url.Action("GolfPlace", "Home")"><i class="fa fa-book"></i> 골프장관리</a></li>
                    }
                }
                 <li class="hide-menu"><a href="@Url.Action("ViewList","Home")"><i class="fa fa-book"></i> 부킹관리</a></li>

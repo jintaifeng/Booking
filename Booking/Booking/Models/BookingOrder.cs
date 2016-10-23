@@ -10,7 +10,9 @@ namespace Booking.Models
         public BaseResult BaseResult = new BaseResult();
         public int OrderId { get; set; }
         public string UserId { get; set; }
+        public string UserName { get; set; }
         public string CourseId { get; set; }
+        public string CourseName { get; set; }
         public string BookingUserName { get; set; }
         public string Phone { get; set; }
         public string BookingStatus { get; set; }
@@ -40,6 +42,8 @@ namespace Booking.Models
     }
     public class BookingOrderListQuery
     {
+        public string UserId { get; set; }
+        public bool IsAdmin { get; set; }
         public string CourseId { get; set; }
         public string BookingStatus { get; set; }
         public string SettleStatus { get; set; }
@@ -51,9 +55,7 @@ namespace Booking.Models
         public string SearchFiled { get; set; }
         public string SearchValue{ get; set; }
         public string SearchType { get; set; }
-        public string CloseStatus { get; set; }
-
-        public PageData PageData = new PageData();
+        public string ViewClose { get; set; }
     }
     public class BookingOrderList
     {
@@ -62,4 +64,26 @@ namespace Booking.Models
         public List<BookingOrder> bookingOrderList = new List<BookingOrder>();
         public BaseResult BaseResult = new BaseResult();
     }
+
+    public class BookingGroup
+    {
+        public string UserName { get; set; }
+        public int CloseCount { get; set; }
+        public int SuccessCount { get; set; }
+    }
+        public class BookingStatistics
+    {
+        public DateTime BookingDate { get; set; }
+        public DateTime AppointmentDate { get; set; }
+        public string BookingStatus { get; set; }
+        public string SettleStatus { get; set; }
+        public int Deposit { get; set; }
+        public int PayBalance { get; set; }
+        public int SubTotal { get; set; }
+        public int Commission { get; set; }
+        public int OrderCount { get; set; }
+        public int PeopleNumber { get; set; }
+        public string GroupValue { get; set; }
+    }
+
 }

@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "골프장 관리";
+    int i = 0;
+}
+@model IEnumerable<Booking.Models.GolfPlace>
+<div class="content">
+<div class="col-xs-12" style="margin-bottom:30px;">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th rowspan="2">No</th>
+                    <th rowspan="2">골프장</th>
+                    <th rowspan="2">수수료</th>
+                    <th rowspan="2">설명</th>
+                    <th rowspan="2"></th>
+                    <th rowspan="2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    i = i + 1;
+                    <tr>
+                        <td>
+                            @i
+                            <input type="hidden" class="courseid" value="@item.CourseId" />
+                        </td>                      
+                        <td>@item.CourseName</td>
+                        <td class="text-right"><input type="text" class="commission only_auto_comma" value="@item.Commission"/></td>
+                        <td><input type="text" class="desc" value="@item.Description"/></td>                       
+                        <td>
+                                <button type='button' class='updatebtn btn btn-xs btn-primary'>
+                                    <span>수정</span>
+                                </button>
+                        </td>
+                        <td>
+                            @if (item.Status == "open")
+                            {
+                                <button type='button' class='closebtn btn btn-xs btn-danger'>
+                                    <span>취소</span>
+                                </button>
+                            }
+
+                        </td>
+                    </tr>
+                }
+                <tr bgcolor="#adc8e7">
+                    <td>&nbsp;</td>
+                    <td><input type="text" class="place_name" value=""/></td>
+                    <td class="text-right"><input type="text" class="commission only_auto_comma" value="" /></td>
+                    <td><input type="text" class="desc" value="" /></td>
+                    <td>
+                        <button type='button' class='addbtn btn btn-xs btn-danger'>
+                            <span>추가</span>
+                        </button>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><!--//.table-responsive-->
+</div><!--//.col-xs-12-->
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $(".updatebtn").click(function () {
+                var postData = {};
+                postData.CourseId = $(this).closest("tr").find(".courseid").val();
+                postData.Commission = parseInt($(this).closest("tr").find(".commission").autoNumeric('get'), 10)
+                postData.Description = $(this).closest("tr").find(".desc").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/common/updategolfplace",
+                    data:{place:postData},
+                    success:function(r){
+                        if (r.isSuccess) {
+                            alert("수정 성공하였습니다.");
+                            window.location.reload();
+                        }
+                        else
+                            alert("수정 싶패하였습니다.");
+                    }
+                });
+            });
+            $(".addbtn").click(function () {
+                var postData = {};
+                postData.CourseName = $(this).closest("tr").find(".place_name").val();
+                postData.Commission = parseInt($(this).closest("tr").find(".commission").autoNumeric('get'), 10)
+                postData.Description = $(this).closest("tr").find(".desc").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/common/addgolfplace",
+                    data: { place: postData },
+                    success: function (r) {
+                        if (r.isSuccess) {
+                            alert("추가 성공하였습니다.");
+                            window.location.reload();
+                        }
+                        else
+                            alert("추가 싶패하였습니다.");
+                    }
+                });
+            });
+            $(".closebtn").click(function () {
+                var postData = {};
+                postData.CourseId = $(this).closest("tr").find(".courseid").val();
+                postData.Status = "close";
+                $.ajax({
+                    type: "POST",
+                    url: "/common/updategolfplace",
+                    data: { place: postData },
+                    success: function (r) {
+                        if (r.isSuccess) {
+                            alert("취소 성공하였습니다.");
+                            window.location.reload();
+                        }
+                        else
+                            alert("취소 싶패하였습니다.");
+                    }
+                });
+            });
+        });
+    </script>
+}
+
