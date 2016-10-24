@@ -83,6 +83,10 @@ namespace Booking.DacLayer
             BaseResult baseResult = new BaseResult();
             try
             {
+                if (string.IsNullOrEmpty(order.Description))
+                {
+                    order.Description = "";
+                }
                 string sql = @"INSERT INTO [dbo].[booking_order]
 						   ([user_id],[course_id]
 						   ,[booking_username]
@@ -337,7 +341,7 @@ namespace Booking.DacLayer
                     if (!string.IsNullOrEmpty(sb.ToString())) {
                         sb.Append(" , ");
                     }
-                    sb.AppendFormat(" description='{0}' ", place.Description);
+                    sb.AppendFormat(" description=N'{0}' ", place.Description);
                 }
                 string sql = string.Format(@"update dbo.[golf_course] set {0} where course_id=@course_id", sb.ToString());
                 DbCommand cmd = dh.GetSqlStringCommond(sql);
@@ -520,6 +524,7 @@ namespace Booking.DacLayer
                         order.Description = dt.Rows[i]["description"].ToString();
                         order.SettleStatus = dt.Rows[i]["settle_status"].ToString();
                         order.CreateDate = Convert.ToDateTime(dt.Rows[i]["tstamp"]);
+                        order.UpdateDate = Convert.ToDateTime(dt.Rows[i]["update_time"]);
                         orderlist.bookingOrderList.Add(order);
                     }
                 }
@@ -543,7 +548,7 @@ namespace Booking.DacLayer
             string where = "";
             if (!string.IsNullOrEmpty(userid))
             {
-                where = string.Format(" and user_id='{0}' ", userid);
+                where = string.Format(" and a.user_id='{0}' ", userid);
             }
             string sql = @"SELECT a.[user_id] ,b.[name]
 							      ,sum(CASE WHEN bookling_status='close' THEN 1 ELSE 0 END)  closecount

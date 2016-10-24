@@ -143,7 +143,8 @@
 
                         <button type="button" class="btn btn-xs btn-primary" onclick="javascript: location.href = '/booking/multiwrite'"><i class="fa fa-pencil"></i> 멀티입력</button>
 
-                        <button type="button" class="btn btn-xs bg-purple prt only_tooltip" onclick="javascript:printPage('0');"><i class='fa fa-print fa-custom-2' title='출력'></i></button>																	<button type="button" class="btn btn-xs bg-green" onclick="javascript:save_excel();"><i class='fa fa-custom' title='액셀저장'>xls</i></button>
+                        <button type="button" class="btn btn-xs bg-purple prt only_tooltip" onclick="javascript:printPage('0');"><i class='fa fa-print fa-custom-2' title='출력'></i></button>																	
+                        <button type="button" class="btn btn-xs bg-green" onclick="javascript:save_excel();"><i class='fa fa-custom' title='액셀저장'>xls</i></button>
                         &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div><!--//.form-group -->
@@ -430,19 +431,10 @@
         }
     }
     function save_excel() {
-        var myquery = $("[name=hidden_excel_sql]").val();	//액셀을 위한 SQL문장
-        var lst_num = $("[name=lst_num]").val();
-        myquery = encodeURIComponent(myquery);			//특수문자를 넘기기 위해 javascript의 encodeURIComponent 함수를 사용
-        var file_name = "booking";
-        if (myquery) {
-            var message = "검색 결과를 액셀로 저장하시겠습니까?";
-            var my_url = "./excel_save.htm?myquery=" + myquery;
-
-            my_url += "&file_name" + file_name;	/* 파일이름 */
-            my_url += "&lst_num=" + lst_num;	/* 리스트 수 */
-            if (confirm(message)) location.href = my_url;
-            else return false;
-        }
+        var message = "검색 결과를 액셀로 저장하시겠습니까?";
+        if (confirm(message))
+            window.location.href = '/Home/ExportExcel';
+        else return false;
     }
 </script>
    

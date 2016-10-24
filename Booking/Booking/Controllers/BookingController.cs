@@ -1,5 +1,6 @@
 ﻿using Booking.DacLayer;
 using Booking.Models;
+using Booking.Utilities;
 using Booking.Utilities.Attributes;
 using Booking.Utilities.Base;
 using System;

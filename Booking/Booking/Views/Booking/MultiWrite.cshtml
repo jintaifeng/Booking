@@ -302,17 +302,19 @@
                 $('.golf_place').on({
                     change: function () {
                         var golf_place = $(this).val();
-                        var i = $(this).closest('tr').index();
-                        $.ajax({
-                            type: 'POST',
-                            url: '/booking/getcommission',
-                            data: {
-                                courseid: golf_place
-                            },
-                            success: function (r) {
-                                $('.manager_commission').eq(i).autoNumeric('set', r.Data.Commission);
-                            }
-                        });
+                        if (golf_place) {
+                            var i = $(this).closest('tr').index();
+                            $.ajax({
+                                type: 'POST',
+                                url: '/booking/getcommission',
+                                data: {
+                                    courseid: golf_place
+                                },
+                                success: function (r) {
+                                    $('.manager_commission').eq(i).autoNumeric('set', r.Data.Commission);
+                                }
+                            });
+                        }
                     }
                 });
 

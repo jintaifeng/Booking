@@ -102,7 +102,7 @@ namespace Booking.DacLayer
             StringBuilder sql = new StringBuilder("select [user_id],login_name,email,name,role_id,phone,[status]  from dbo.[user] where 1=1 ");
             if (!string.IsNullOrEmpty(user.Name))
             {
-                sql.AppendFormat("and name='{0}'", user.Name);
+                sql.AppendFormat("and name=N'{0}'", user.Name);
             }
             if (!string.IsNullOrEmpty(user.Email))
             {
@@ -281,7 +281,7 @@ namespace Booking.DacLayer
                 sb.Append(" update_time= GETDATE() ");
                 if (!string.IsNullOrEmpty(user.Name))
                 {
-                    sb.AppendFormat(", name='{0}' ", user.Name);
+                    sb.AppendFormat(", name=N'{0}' ", user.Name);
                 }
                 if (!string.IsNullOrEmpty(user.Email))
                 {
