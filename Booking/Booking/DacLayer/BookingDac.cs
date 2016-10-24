@@ -13,6 +13,7 @@ namespace Booking.DacLayer
 {
     public class BookingDac
     {
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         DBHelper dh = new DBHelper();
         public BookingOrder GetBookingInfo(int orderid)
         {
@@ -205,6 +206,7 @@ namespace Booking.DacLayer
             {
                 baseResult.Code = 300;
                 baseResult.Message = ex.StackTrace + ex.Message;
+                log.Debug("BookingMultiInsert", ex.StackTrace + ex.Message);
             }
             return baseResult;
         }
@@ -332,7 +334,7 @@ namespace Booking.DacLayer
                 {
                     sb.AppendFormat(" status='{0}' ", place.Status);
                 }
-                if (place.Commission!=0)
+                else 
                 {
                     sb.AppendFormat(" commission={0} ", place.Commission);
                 }
@@ -537,6 +539,7 @@ namespace Booking.DacLayer
             {
                 orderlist.BaseResult.Code = 300;
                 orderlist.BaseResult.Message = ex.StackTrace + ex.Message;
+                log.Debug("GetBookingOrderList ", ex.StackTrace + ex.Message);
             }
             return orderlist;
         }
@@ -577,37 +580,40 @@ namespace Booking.DacLayer
         public List<BookingStatistics> GetBookingStatistics(BookingOrderListQuery orderQuery)
         {
             List<BookingStatistics> list = new List<BookingStatistics>();
-            string orderby = "";
-            StringBuilder sb = new StringBuilder();
-            sb.Append(" where 1=1 ");
-            if (!orderQuery.IsAdmin && !string.IsNullOrEmpty(orderQuery.UserId))
+            try
             {
-                sb.AppendFormat(" and a.user_id='{0}'", orderQuery.UserId);
-            }
-            if (!string.IsNullOrEmpty(orderQuery.CourseId))
-            {
-                sb.AppendFormat(" and a.course_id={0} ", orderQuery.CourseId);
-            }
-            if (!string.IsNullOrEmpty(orderQuery.SettleStatus))
-            {
-                sb.AppendFormat(" and a.settle_status='{0}' ", orderQuery.SettleStatus);
-            }
-            if (!string.IsNullOrEmpty(orderQuery.BookingStatus))
-            {
-                sb.AppendFormat(" and a.bookling_status='{0}' ", orderQuery.BookingStatus);
-            }
-            else {
-                sb.Append(" and a.bookling_status<>'close' ");
-            }
-            if (!string.IsNullOrEmpty(orderQuery.DateType))
-            {
-                sb.AppendFormat(" and a.{0} between '{1}' and '{2}' ", orderQuery.DateType, orderQuery.BeginDate, orderQuery.EndDate);
-            }
-            if (!string.IsNullOrEmpty(orderQuery.SortFiled))
-            {
-                orderby = string.Format(" order by {0} {1} ", orderQuery.SortFiled, orderQuery.SortType);
-            }
-            string sql = @"SELECT {1} group_value
+               
+                string orderby = "";
+                StringBuilder sb = new StringBuilder();
+                sb.Append(" where 1=1 ");
+                if (!orderQuery.IsAdmin && !string.IsNullOrEmpty(orderQuery.UserId))
+                {
+                    sb.AppendFormat(" and a.user_id='{0}'", orderQuery.UserId);
+                }
+                if (!string.IsNullOrEmpty(orderQuery.CourseId))
+                {
+                    sb.AppendFormat(" and a.course_id={0} ", orderQuery.CourseId);
+                }
+                if (!string.IsNullOrEmpty(orderQuery.SettleStatus))
+                {
+                    sb.AppendFormat(" and a.settle_status='{0}' ", orderQuery.SettleStatus);
+                }
+                if (!string.IsNullOrEmpty(orderQuery.BookingStatus))
+                {
+                    sb.AppendFormat(" and a.bookling_status='{0}' ", orderQuery.BookingStatus);
+                }
+                else {
+                    sb.Append(" and a.bookling_status<>'close' ");
+                }
+                if (!string.IsNullOrEmpty(orderQuery.DateType))
+                {
+                    sb.AppendFormat(" and a.{0} between '{1}' and '{2}' ", orderQuery.DateType, orderQuery.BeginDate, orderQuery.EndDate);
+                }
+                if (!string.IsNullOrEmpty(orderQuery.SortFiled))
+                {
+                    orderby = string.Format(" order by {0} {1} ", orderQuery.SortFiled, orderQuery.SortType);
+                }
+                string sql = @"SELECT {1} group_value
                      , COUNT(1) AS OrderCount
                      , SUM(isnull(member_number,0)) member_number
                      , SUM(isnull(deposit,0)) deposit
@@ -618,23 +624,28 @@ namespace Booking.DacLayer
                 {0} 
                 GROUP BY {1}
                 {2}";
-            DbCommand cmd = dh.GetSqlStringCommond(string.Format(sql, sb.ToString(), orderQuery.SortFiled, orderby));
-            DataTable dt = dh.ExecuteDataTable(cmd);
+                DbCommand cmd = dh.GetSqlStringCommond(string.Format(sql, sb.ToString(), orderQuery.SortFiled, orderby));
+                DataTable dt = dh.ExecuteDataTable(cmd);
 
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                for (int i = 0; i < dt.Rows.Count; i++)
+                if (dt != null && dt.Rows.Count > 0)
                 {
-                    BookingStatistics bs = new BookingStatistics();
-                    bs.OrderCount=Convert.ToInt32(dt.Rows[i]["OrderCount"]);
-                    bs.Deposit = Convert.ToInt32(dt.Rows[i]["deposit"]);
-                    bs.PayBalance = Convert.ToInt32(dt.Rows[i]["pay_balance"]);
-                    bs.SubTotal = Convert.ToInt32(dt.Rows[i]["sub_total"]);
-                    bs.Commission = Convert.ToInt32(dt.Rows[i]["commission"]);
-                    bs.PeopleNumber = Convert.ToInt32(dt.Rows[i]["member_number"]);
-                    bs.GroupValue = dt.Rows[i]["group_value"].ToString();
-                    list.Add(bs);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        BookingStatistics bs = new BookingStatistics();
+                        bs.OrderCount = Convert.ToInt32(dt.Rows[i]["OrderCount"]);
+                        bs.Deposit = Convert.ToInt32(dt.Rows[i]["deposit"]);
+                        bs.PayBalance = Convert.ToInt32(dt.Rows[i]["pay_balance"]);
+                        bs.SubTotal = Convert.ToInt32(dt.Rows[i]["sub_total"]);
+                        bs.Commission = Convert.ToInt32(dt.Rows[i]["commission"]);
+                        bs.PeopleNumber = Convert.ToInt32(dt.Rows[i]["member_number"]);
+                        bs.GroupValue = dt.Rows[i]["group_value"].ToString();
+                        list.Add(bs);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                log.Debug("GetBookingStatistics ", ex.StackTrace + ex.Message);
             }
             return list;
         }
