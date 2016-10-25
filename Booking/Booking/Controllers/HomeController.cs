@@ -18,6 +18,7 @@ namespace Booking.Controllers
     [CustomAuthorize]
     public class HomeController : CustomController
     {
+        private static NLog.Logger log = NLog.LogManager.GetLogger("NLog");
         BookingDac booking = new BookingDac();
         public ActionResult Index()
         {

@@ -13,7 +13,7 @@ namespace Booking.DacLayer
 {
     public class BookingDac
     {
-        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+        private static NLog.Logger log = NLog.LogManager.GetLogger("NLog");
         DBHelper dh = new DBHelper();
         public BookingOrder GetBookingInfo(int orderid)
         {
@@ -170,8 +170,8 @@ namespace Booking.DacLayer
                 {
                     insertData += string.Format("( '{0}',{1},'{2}','{3}','{4}','{5}',{6},'{7}','{8}',{9},{10},{11},{12},{13},{14},'{15}',GETDATE(),GETDATE()),"
                                    , order.UserId, order.CourseId, order.BookingUserName, order.Phone, order.BookingStatus
-                                   , order.SettleStatus, order.MemberNumber, order.AppointmentDate, order.BookingDate, order.Deposit
-                                   , order.PayBalance, order.SubTotal, order.Total, order.Commission, order.TotalCommission, order.Description);
+                                   , order.SettleStatus, order.MemberNumber, order.AppointmentDate.ToString("yyyy-MM-dd"), order.BookingDate.ToString("yyyy-MM-dd") +" "+ order.BookingDate.Hour.ToString()+":"+ order.BookingDate.Minute.ToString()
+                                   , order.Deposit, order.PayBalance, order.SubTotal, order.Total, order.Commission, order.TotalCommission, order.Description);
                 }
                 string sql = @"INSERT INTO [dbo].[booking_order]
 						   ([user_id],[course_id]
@@ -439,10 +439,10 @@ namespace Booking.DacLayer
                     sb.AppendFormat(" and a.bookling_status='{0}' ", orderQuery.BookingStatus);
                 }
                 if (!string.IsNullOrEmpty(orderQuery.DateType))
-                {
-                    sb.AppendFormat(" and a.{0} between '{1}' and '{2}' ", orderQuery.DateType, orderQuery.BeginDate, orderQuery.EndDate);
+               {
+                    sb.AppendFormat(" and a.{0} between '{1}' and '{2}' ", orderQuery.DateType, orderQuery.BeginDate.ToString("yyyy-MM-dd"), orderQuery.EndDate.ToString("yyyy-MM-dd"));
                 }
-                if (!string.IsNullOrEmpty(orderQuery.SearchFiled) && !string.IsNullOrEmpty(orderQuery.SearchType) && !string.IsNullOrEmpty(orderQuery.SearchValue))
+            if (!string.IsNullOrEmpty(orderQuery.SearchFiled) && !string.IsNullOrEmpty(orderQuery.SearchType) && !string.IsNullOrEmpty(orderQuery.SearchValue))
                 {
                     if (orderQuery.SearchType == "%")
                         sb.AppendFormat(" and a.{0} LIKE '%{1}%'", orderQuery.SearchFiled, orderQuery.SearchValue);
@@ -607,7 +607,7 @@ namespace Booking.DacLayer
                 }
                 if (!string.IsNullOrEmpty(orderQuery.DateType))
                 {
-                    sb.AppendFormat(" and a.{0} between '{1}' and '{2}' ", orderQuery.DateType, orderQuery.BeginDate, orderQuery.EndDate);
+                    sb.AppendFormat(" and a.{0} between '{1}' and '{2}' ", orderQuery.DateType, orderQuery.BeginDate.ToString("yyyy-MM-dd"), orderQuery.EndDate.ToString("yyyy-MM-dd"));
                 }
                 if (!string.IsNullOrEmpty(orderQuery.SortFiled))
                 {

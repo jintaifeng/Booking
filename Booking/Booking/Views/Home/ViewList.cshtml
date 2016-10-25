@@ -2,6 +2,8 @@
     ViewBag.Title = "부킹관리";
     Booking.Models.BookingOrderListQuery query = (Booking.Models.BookingOrderListQuery)ViewBag.Query;
     int i = 0;
+    string hour = "";
+    string minute = "";
 }
 @model Booking.Models.BookingOrderList
  <div class="content">
@@ -202,7 +204,11 @@
                                         }
                                     </td>
                                     <td>@item.AppointmentDate.ToString("yyyy-MM-dd")</td>
-                                    <td class="tdBookingDate"><span class="sWeek color-red font-11"></span><span class="sDate">@item.BookingDate.ToString("yyyy-MM-dd")</span></td>
+                                    <td class="tdBookingDate">
+                                        <span class="sWeek color-red font-11"></span>
+                                        <span class="sDate">@item.BookingDate.ToString("yyyy-MM-dd hh:mm") 
+                                        </span>
+                                    </td>
                                     <td class="text-left ws-normal">@item.BookingUserName</td>
                                     <td class="text-left">@item.Phone</td>
                                     <td class="text-left ws-normal">
@@ -322,7 +328,7 @@
         $("select[name=SearchFiled]").val('@query.SearchFiled');
         $("select[name=SearchType]").val('@query.SearchType');
         $("select[name=SearchValue]").val('@query.SearchValue');
-        
+
         $("#container").find("tr").each(function () {
             var week=common_get_yoil($(this).find(".tdBookingDate .sDate").html());
             $(this).find(".tdBookingDate .sWeek").html("[" + week + "] ");
@@ -385,7 +391,7 @@
                     url: '/Booking/BookingHandle',
                     data: { orderid:cart,mode: "bookingdelete" },
                     //async: false, //설정하지 않은면 true
-                    success: function (r) { 
+                    success: function (r) {
                         if(r.isSuccess){
                             alert("삭제 성공하였습니다.");
                             window.location.reload();
@@ -417,7 +423,7 @@
                         type: 'POST',
                         url: '/Booking/BookingHandle',
                         data: {orderid:cart, mode: "settlesuccess" },
-                        success: function (r) { 
+                        success: function (r) {
                             if(r.isSuccess){
                                 alert("정산 성공하였습니다.");
                                 window.location.reload();
@@ -431,6 +437,11 @@
         }
     }
     function save_excel() {
+        if('@Model.bookingOrderList.Count'==0)
+        {
+            alert("검색 결과가 없으면 액셀로 저장할수 없습니다.");
+            return false;
+        }
         var message = "검색 결과를 액셀로 저장하시겠습니까?";
         if (confirm(message))
             window.location.href = '/Home/ExportExcel';

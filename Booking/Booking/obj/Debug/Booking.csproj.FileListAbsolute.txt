@@ -121,6 +121,11 @@ E:\个人项目\Booking\Booking\Booking\bin\Microsoft.Owin.Security.OAuth.dll
 E:\个人项目\Booking\Booking\Booking\bin\Microsoft.Owin.Security.Twitter.dll
 E:\个人项目\Booking\Booking\Booking\bin\Microsoft.Web.Infrastructure.dll
 E:\个人项目\Booking\Booking\Booking\bin\Newtonsoft.Json.dll
+E:\个人项目\Booking\Booking\Booking\bin\NLog.dll
+E:\个人项目\Booking\Booking\Booking\bin\NPOI.dll
+E:\个人项目\Booking\Booking\Booking\bin\NPOI.OOXML.dll
+E:\个人项目\Booking\Booking\Booking\bin\NPOI.OpenXml4Net.dll
+E:\个人项目\Booking\Booking\Booking\bin\NPOI.OpenXmlFormats.dll
 E:\个人项目\Booking\Booking\Booking\bin\Owin.dll
 E:\个人项目\Booking\Booking\Booking\bin\System.Web.Helpers.dll
 E:\个人项目\Booking\Booking\Booking\bin\System.Web.Mvc.dll
@@ -159,10 +164,5 @@ E:\个人项目\Booking\Booking\Booking\bin\Microsoft.Owin.Security.OAuth.xml
 E:\个人项目\Booking\Booking\Booking\bin\Microsoft.Owin.Security.Google.xml
 E:\个人项目\Booking\Booking\Booking\bin\Microsoft.Owin.Security.Twitter.xml
 E:\个人项目\Booking\Booking\Booking\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-E:\个人项目\Booking\Booking\Booking\obj\Debug\Booking.csprojResolveAssemblyReference.cache
 E:\个人项目\Booking\Booking\Booking\obj\Debug\Booking.dll
 E:\个人项目\Booking\Booking\Booking\obj\Debug\Booking.pdb
-E:\个人项目\Booking\Booking\Booking\bin\NPOI.dll
-E:\个人项目\Booking\Booking\Booking\bin\NPOI.OOXML.dll
-E:\个人项目\Booking\Booking\Booking\bin\NPOI.OpenXml4Net.dll
-E:\个人项目\Booking\Booking\Booking\bin\NPOI.OpenXmlFormats.dll
