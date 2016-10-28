@@ -166,3 +166,4 @@ E:\个人项目\Booking\Booking\Booking\bin\Microsoft.Owin.Security.Twitter.xml
 E:\个人项目\Booking\Booking\Booking\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 E:\个人项目\Booking\Booking\Booking\obj\Debug\Booking.dll
 E:\个人项目\Booking\Booking\Booking\obj\Debug\Booking.pdb
+E:\个人项目\Booking\Booking\Booking\obj\Debug\Booking.csprojResolveAssemblyReference.cache

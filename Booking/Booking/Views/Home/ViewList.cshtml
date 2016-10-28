@@ -169,6 +169,7 @@
                                 <th rowspan="2">인원</th>
                                 <th colspan="2">그린피 결제(인당)</th>
                                 <th rowspan="2">수수료<br />(인당)</th>
+                                <th rowspan="2">수수료<br />(인당*인원)</th>
                                 <th rowspan="2" style="width:90px !important;">비 고</th>
                                 <th rowspan="2">예약<br />구분</th>
                                 <th rowspan="2">정산<br />구분</th>
@@ -205,9 +206,9 @@
                                     </td>
                                     <td>@item.AppointmentDate.ToString("yyyy-MM-dd")</td>
                                     <td class="tdBookingDate">
-                                        <span class="sWeek color-red font-11"></span>
                                         <span class="sDate">@item.BookingDate.ToString("yyyy-MM-dd hh:mm") 
                                         </span>
+                                        <span class="sWeek color-red font-11"></span>
                                     </td>
                                     <td class="text-left ws-normal">@item.BookingUserName</td>
                                     <td class="text-left">@item.Phone</td>
@@ -220,6 +221,7 @@
                                         <span class='color-black only_popover only_auto_comma' popover-content='' popover-title='입금 완료 내역'>@item.Deposit</span>
                                     </td>
                                     <td class="text-right">@item.Commission</td>
+                                    <td class="text-right">@item.TotalCommission</td>
                                     <td class="text-left ws-normal">@item.Description</td>
                                     <td>
                                         @if (item.BookingStatus == "success")
@@ -264,6 +266,7 @@
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                             </tr>
                             @if (Model.bookingOrderList.Where(m => m.BookingStatus == "close").Count()>0) {
                             <tr class="bg-gray-1">
@@ -272,6 +275,7 @@
                                 <td class="text-right only_auto_comma">@Model.bookingOrderList.Where(m => m.BookingStatus == "close").Sum(m => m.PayBalance)</td>
                                 <td class="text-right only_auto_comma">@Model.bookingOrderList.Where(m => m.BookingStatus == "close").Sum(m => m.Deposit)</td>
                                 <td class="text-right only_auto_comma">@Model.bookingOrderList.Where(m => m.BookingStatus == "close").Sum(m => m.Commission)</td>
+                                <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
@@ -285,10 +289,14 @@
                 <div class="list-option">
                     <i class="fa fa-check color-red" onclick="checkbox_check_all();" title="전체 선택/해제"></i>
                     <span>체크된 모든 것</span>&nbsp;&nbsp;&nbsp;
-                    <a href="#" onclick="check_all_delete('');">취소</a>&nbsp;
+                    <button type='button' class='btn btn-xs btn-danger' onclick="check_all_delete('');">
+                        <span>취소</span>
+                    </button>&nbsp;
                     @if (Context.User.Identity.AuthenticationType == "Admin")
                     {
-                    <a href="#" onclick="check_all_settle('');">정산</a>
+                        <button type='button' class='btn btn-xs btn-danger' onclick="check_all_settle('');">
+                            <span>정산</span>
+                        </button>
                     }
                     &nbsp; &nbsp;
                 </div>

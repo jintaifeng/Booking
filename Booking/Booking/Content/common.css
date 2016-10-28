@@ -138,7 +138,16 @@ div[class*="col-"]:last-child {padding-right:0px !important;}		//마지막
 
 /* Navbar */
 .navbar {/*background-color:#4a8ada; border-bottom:1px solid #d2d2d2;*/}
-.navbar .container {background-color:#00A65A; /*border-bottom:1px solid #d2d2d2;*/}
+.navbar .container { 
+    border-right: 1px solid #d2d2d2;
+    background: black; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(right, black , white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, black, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, black, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, black , white); /* Standard syntax 
+    /*background-color:#00A65A;*/ /*border-bottom:1px solid #d2d2d2;*/
+
+}
 .navbar .navbar-brand {height:54px; padding:15px; color:#fff; font-size:18px; line-height:28px; font-weight: bold;}
 
 .navbar .nav {padding: 6px; color:#fff;}
@@ -150,7 +159,24 @@ div[class*="col-"]:last-child {padding-right:0px !important;}		//마지막
 .navbar-toggle .icon-bar {background:#fff;}
 
 .navbar .nav .hide-menu {display:none !important;}
-
+.login_logo {
+    background: url(/images/logo.png) no-repeat scroll center transparent;
+    width: 131px;
+    height: 95px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.weather {
+     background: url(/images/weather.png)  no-repeat scroll center transparent;
+     background-size: 60% auto; 
+     width: 46px;
+     height: 41px;
+     display: inline-block;
+     font: normal normal normal 14px/1 FontAwesome;
+     font-size: inherit;
+     text-rendering: auto;
+     -webkit-font-smoothing: antialiased;
+}
 @media (max-width:767px) {
 	.navbar .nav .hide-menu {display:block !important;}
 }

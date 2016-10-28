@@ -268,6 +268,8 @@
     <Content Include="images\favicons\favicon.ico" />
     <Content Include="images\favicons\safari-pinned-tab.svg" />
     <Content Include="images\icon_loginworng.png" />
+    <Content Include="images\logo.png" />
+    <Content Include="images\weather.png" />
     <Content Include="js\autoNumeric.min.js" />
     <Content Include="js\common.js" />
     <Content Include="js\common_jquery.js" />
