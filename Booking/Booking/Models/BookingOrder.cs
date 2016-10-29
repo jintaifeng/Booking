@@ -81,7 +81,9 @@ namespace Booking.Models
         public int Deposit { get; set; }
         public int PayBalance { get; set; }
         public int SubTotal { get; set; }
+        public int Total { get; set; }
         public int Commission { get; set; }
+        public int TotalCommission { get; set; }
         public int OrderCount { get; set; }
         public int PeopleNumber { get; set; }
         public string GroupValue { get; set; }

@@ -619,7 +619,9 @@ namespace Booking.DacLayer
                      , SUM(isnull(deposit,0)) deposit
                      , SUM(isnull(pay_balance,0)) pay_balance
                      , SUM(isnull(sub_total,0)) sub_total
+                     , SUM(isnull(total,0)) total
                      , SUM(isnull(a.commission,0)) commission
+                     , SUM(isnull(a.total_commission,0)) totalcommission
                 FROM [dbo].[booking_order] a join [dbo].[golf_course] b on a.course_id=b.course_id 
                 {0} 
                 GROUP BY {1}
@@ -636,7 +638,9 @@ namespace Booking.DacLayer
                         bs.Deposit = Convert.ToInt32(dt.Rows[i]["deposit"]);
                         bs.PayBalance = Convert.ToInt32(dt.Rows[i]["pay_balance"]);
                         bs.SubTotal = Convert.ToInt32(dt.Rows[i]["sub_total"]);
+                        bs.Total = Convert.ToInt32(dt.Rows[i]["total"]);
                         bs.Commission = Convert.ToInt32(dt.Rows[i]["commission"]);
+                        bs.TotalCommission = Convert.ToInt32(dt.Rows[i]["totalcommission"]);
                         bs.PeopleNumber = Convert.ToInt32(dt.Rows[i]["member_number"]);
                         bs.GroupValue = dt.Rows[i]["group_value"].ToString();
                         list.Add(bs);
